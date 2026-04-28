@@ -27,29 +27,28 @@ export const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="section-spacing bg-slate-50/30">
-      <div className="container mx-auto px-6">
+    <section id="faq" className="section-spacing bg-white relative overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-primary text-[10px] uppercase tracking-[0.5em] font-bold mb-4 block">Preguntas comunes</span>
-            <h2 className="text-4xl font-serif font-bold">Resolvé tus dudas</h2>
+          <div className="text-center mb-20">
+            <span className="text-primary text-[11px] uppercase tracking-[0.5em] font-bold mb-6 block">Preguntas frecuentes</span>
+            <h2 className="text-5xl md:text-6xl font-serif font-black text-foreground">Despejá tus <span className="text-secondary italic font-light">dudas</span></h2>
           </div>
-
-          <div className="space-y-4">
+ 
+          <div className="space-y-6">
             {faqs.map((faq, index) => (
               <div 
                 key={index}
-                className="bg-white rounded-2xl border border-primary/5 overflow-hidden shadow-sm hover:shadow-md transition-all duration-500"
+                className="bg-secondary/[0.02] rounded-[2rem] border border-secondary/5 overflow-hidden hover:border-secondary/20 hover:bg-white hover:shadow-2xl hover:shadow-secondary/5 transition-all duration-500"
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="w-full p-6 text-left flex justify-between items-center group"
+                  className="w-full p-8 text-left flex justify-between items-center group"
                 >
-                  <span className="font-serif font-bold text-foreground group-hover:text-primary transition-colors">{faq.question}</span>
-                  <ChevronDown 
-                    size={20} 
-                    className={`text-primary/40 transition-transform duration-500 ${openIndex === index ? 'rotate-180' : ''}`} 
-                  />
+                  <span className="text-xl font-serif font-bold text-foreground group-hover:text-secondary transition-colors leading-snug">{faq.question}</span>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${openIndex === index ? 'bg-secondary text-white rotate-180' : 'bg-secondary/5 text-secondary'}`}>
+                    <ChevronDown size={20} />
+                  </div>
                 </button>
                 <AnimatePresence>
                   {openIndex === index && (
@@ -59,7 +58,7 @@ export const FAQ = () => {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
                     >
-                      <div className="p-6 pt-0 text-sm text-muted leading-relaxed font-sans border-t border-slate-50">
+                      <div className="p-8 pt-0 text-base text-muted leading-relaxed font-sans font-light border-t border-secondary/5 mt-2">
                         {faq.answer}
                       </div>
                     </motion.div>

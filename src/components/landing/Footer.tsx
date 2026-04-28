@@ -45,42 +45,45 @@ const LinkedinIcon = ({ size = 16, className = "" }) => (
 
 export const Footer = () => {
   return (
-    <footer className="py-20 bg-accent/5 text-foreground border-t border-primary/10">
-      <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-16 mb-20">
+    <footer className="py-24 bg-secondary text-white border-t border-white/10 relative overflow-hidden">
+      {/* Decorative texture for footer */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none grayscale brightness-200" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/natural-paper.png")' }} />
+      
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid md:grid-cols-4 gap-16 mb-24">
           <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="group flex items-center gap-3 mb-8">
-              <div className="relative w-14 h-14 overflow-hidden">
+            <Link href="/" className="group flex items-center gap-4 mb-10">
+              <div className="relative w-16 h-16 overflow-hidden bg-white rounded-2xl p-2 shadow-2xl">
                 <Image 
                   src="/logo.png" 
                   alt={SITE_CONFIG.name} 
                   fill
-                  sizes="56px"
-                  className="object-contain group-hover:scale-105 transition-all duration-500" 
+                  sizes="64px"
+                  className="object-contain" 
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-serif font-bold tracking-tight text-foreground leading-tight">
+                <span className="text-xl font-serif font-black tracking-tight text-white leading-tight">
                   {SITE_CONFIG.name}
                 </span>
-                <span className="text-[8px] uppercase tracking-[0.2em] text-primary font-bold">
+                <span className="text-[10px] uppercase tracking-[0.3em] text-accent font-bold mt-1">
                   Matrícula Profesional 7250
                 </span>
               </div>
             </Link>
-            <p className="text-sm text-muted max-w-sm leading-relaxed mb-10">
-              Nutricionista dedicada al diagnóstico clínico, recomposición corporal y optimización del rendimiento basada en evidencia científica rigurosa.
+            <p className="text-base text-white/60 max-w-sm leading-relaxed mb-12 font-light">
+              Transformando la nutrición a través de la evidencia científica, el respeto por la individualidad y la búsqueda constante del bienestar integral.
             </p>
             <div className="flex items-center gap-4">
-              <a href={`https://instagram.com/${SITE_CONFIG.instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white border border-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-500 shadow-sm">
-                <InstagramIcon size={20} />
+              <a href={`https://instagram.com/${SITE_CONFIG.instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary hover:scale-110 transition-all duration-500 shadow-xl">
+                <InstagramIcon size={24} />
               </a>
             </div>
           </div>
           
           <div>
-            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-foreground/40 mb-10">Atención Clínica</h4>
-            <ul className="space-y-10">
+            <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-accent/40 mb-12">Atención Clínica</h4>
+            <ul className="space-y-12">
               <li>
                 <a 
                   href={SITE_CONFIG.locations.cemir.mapUrl} 
@@ -88,12 +91,12 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="group block"
                 >
-                  <div className="flex items-center gap-3 mb-3 text-foreground group-hover:text-primary transition-colors">
-                    <MapPin size={18} className="text-primary/40" />
-                    <span className="text-[11px] font-bold uppercase tracking-widest">{SITE_CONFIG.locations.cemir.name}</span>
+                  <div className="flex items-center gap-4 mb-4 text-white group-hover:text-accent transition-colors">
+                    <MapPin size={20} className="text-accent/60" />
+                    <span className="text-[12px] font-bold uppercase tracking-[0.2em]">{SITE_CONFIG.locations.cemir.name}</span>
                   </div>
-                  <p className="pl-8 text-xs text-muted leading-relaxed">{SITE_CONFIG.locations.cemir.address}</p>
-                  <p className="pl-8 text-[9px] text-primary font-bold mt-2 uppercase tracking-tight">{SITE_CONFIG.locations.cemir.schedules}</p>
+                  <p className="pl-9 text-sm text-white/50 leading-relaxed font-light">{SITE_CONFIG.locations.cemir.address}</p>
+                  <p className="pl-9 text-[10px] text-accent font-black mt-3 uppercase tracking-widest">{SITE_CONFIG.locations.cemir.schedules}</p>
                 </a>
               </li>
               <li>
@@ -103,40 +106,40 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="group block"
                 >
-                  <div className="flex items-center gap-3 mb-3 text-foreground group-hover:text-secondary transition-colors">
-                    <MapPin size={18} className="text-secondary/40" />
-                    <span className="text-[11px] font-bold uppercase tracking-widest">{SITE_CONFIG.locations.xtreme.name}</span>
+                  <div className="flex items-center gap-4 mb-4 text-white group-hover:text-accent transition-colors">
+                    <MapPin size={20} className="text-accent/60" />
+                    <span className="text-[12px] font-bold uppercase tracking-[0.2em]">{SITE_CONFIG.locations.xtreme.name}</span>
                   </div>
-                  <p className="pl-8 text-xs text-muted leading-relaxed">{SITE_CONFIG.locations.xtreme.address}</p>
-                  <p className="pl-8 text-[9px] text-secondary font-bold mt-2 uppercase tracking-tight">{SITE_CONFIG.locations.xtreme.schedules}</p>
+                  <p className="pl-9 text-sm text-white/50 leading-relaxed font-light">{SITE_CONFIG.locations.xtreme.address}</p>
+                  <p className="pl-9 text-[10px] text-accent font-black mt-3 uppercase tracking-widest">{SITE_CONFIG.locations.xtreme.schedules}</p>
                 </a>
               </li>
             </ul>
           </div>
           
           <div>
-            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-foreground/40 mb-10">Contacto</h4>
-            <ul className="space-y-8">
-              <li className="flex items-center gap-5 text-muted group cursor-pointer hover:text-foreground transition-colors">
-                <div className="w-12 h-12 rounded-2xl bg-white border border-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
-                  <Mail size={20} />
+            <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-accent/40 mb-12">Contacto</h4>
+            <ul className="space-y-10">
+              <li className="flex items-center gap-6 group cursor-pointer">
+                <div className="w-14 h-14 rounded-[1.2rem] bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:border-primary transition-all duration-500 shadow-xl">
+                  <Mail size={24} />
                 </div>
                 <div>
-                  <p className="text-[9px] uppercase tracking-widest font-bold opacity-40">Email Profesional</p>
-                  <p className="text-xs font-medium">{SITE_CONFIG.email}</p>
+                  <p className="text-[10px] uppercase tracking-[0.3em] font-black opacity-40 mb-1">Email</p>
+                  <p className="text-sm font-medium text-white/80 group-hover:text-white transition-colors">{SITE_CONFIG.email}</p>
                 </div>
               </li>
             </ul>
           </div>
         </div>
         
-        <div className="pt-10 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-muted font-bold">
-            © {new Date().getFullYear()} Lic. Yesica M. García — Nutrición Basada en Evidencia
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-10">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-white/30 font-bold">
+            © {new Date().getFullYear()} Lic. Yesica M. García — Nutrición de Precisión
           </p>
-          <div className="flex gap-10 text-[10px] uppercase tracking-[0.2em] text-muted font-bold">
-            <Link href="#" className="hover:text-primary transition-colors">Aviso Legal</Link>
-            <Link href="#" className="hover:text-primary transition-colors">Privacidad</Link>
+          <div className="flex gap-12 text-[11px] uppercase tracking-[0.3em] text-white/30 font-bold">
+            <Link href="#" className="hover:text-accent transition-colors">Legales</Link>
+            <Link href="#" className="hover:text-accent transition-colors">Privacidad</Link>
           </div>
         </div>
       </div>

@@ -38,14 +38,14 @@ const services = [
 
 export const Services = () => {
   return (
-    <section id="servicios" className="section-spacing bg-slate-50/50">
+    <section id="servicios" className="section-spacing bg-secondary/[0.02]">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center mb-32">
           <motion.span 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-primary text-[11px] uppercase tracking-[0.5em] font-bold mb-8 block"
+            className="text-primary text-[12px] uppercase tracking-[0.6em] font-bold mb-10 block"
           >
             Mis Especialidades
           </motion.span>
@@ -53,22 +53,17 @@ export const Services = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-serif font-bold mb-10 text-foreground leading-tight"
+            className="text-5xl md:text-7xl lg:text-8xl font-serif font-black mb-12 text-foreground leading-[0.95]"
           >
-            Especialidades <br />
-            <span className="italic text-foreground/40 font-light font-sans tracking-tight">Nutricionales</span>
+            Abordaje <br />
+            <span className="italic text-secondary font-light font-serif">Integrativo</span>
           </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-xl text-muted font-sans max-w-2xl mx-auto leading-relaxed"
-          >
-            Te acompaño con un abordaje integral y respaldo científico para potenciar tu salud y rendimiento físico mediante nutrición de precisión.
-          </motion.p>
+          <p className="text-xl text-muted font-sans max-w-2xl mx-auto leading-relaxed font-light">
+            Soluciones personalizadas con respaldo científico para potenciar tu salud, rendimiento y relación con la comida.
+          </p>
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
@@ -76,18 +71,21 @@ export const Services = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.19, 1, 0.22, 1] }}
-              className="group p-12 bg-white border border-slate-100 rounded-[2rem] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)] hover:border-primary/10 transition-all duration-700 flex flex-col items-start"
+              className="group p-14 bg-white border border-slate-100 rounded-[3rem] hover:shadow-[0_50px_100px_-20px_rgba(59,82,51,0.08)] hover:border-secondary/20 transition-all duration-700 flex flex-col items-start relative overflow-hidden"
             >
-              <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-primary/10 transition-all duration-500 group-hover:rotate-6">
-                <service.icon size={28} className="text-slate-400 group-hover:text-primary transition-colors" />
+              {/* Corner accent */}
+              <div className="absolute top-0 right-0 w-24 h-24 bg-secondary/5 -mr-12 -mt-12 rounded-full group-hover:scale-150 transition-transform duration-700" />
+              
+              <div className="w-16 h-16 bg-secondary/5 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-secondary group-hover:text-white transition-all duration-500 group-hover:rotate-12 shadow-inner">
+                <service.icon size={28} className="text-secondary group-hover:text-white transition-colors" />
               </div>
-              <h3 className="text-2xl font-serif font-bold mb-6 text-foreground group-hover:text-primary transition-colors duration-500">{service.title}</h3>
-              <p className="text-base leading-relaxed text-muted font-sans font-normal opacity-80 group-hover:opacity-100 transition-opacity">
+              <h3 className="text-3xl font-serif font-black mb-6 text-foreground group-hover:text-secondary transition-colors duration-500 leading-tight">{service.title}</h3>
+              <p className="text-base leading-relaxed text-muted font-sans font-light opacity-80 group-hover:opacity-100 transition-opacity">
                 {service.description}
               </p>
-              <div className="mt-10 pt-8 border-t border-slate-50 w-full flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0">
-                <span className="text-[10px] uppercase tracking-widest font-bold text-primary">Saber más</span>
-                <div className="w-8 h-[1px] bg-primary/30" />
+              <div className="mt-12 pt-10 border-t border-slate-50 w-full flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0">
+                <span className="text-[11px] uppercase tracking-[0.3em] font-bold text-secondary">Ver detalles</span>
+                <div className="w-12 h-[2px] bg-secondary/20" />
               </div>
             </motion.div>
           ))}
