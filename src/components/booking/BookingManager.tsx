@@ -80,7 +80,8 @@ export const BookingManager = () => {
           full_name: formData.name,
           phone: formData.phone,
           email: formData.email,
-          service_name: `${selectedService.name} (${selectedService.description}) - ${formData.modality} en ${formData.location}`,
+          modality: `${selectedService.name} - ${formData.modality}`,
+          location: formData.location,
           status: 'pendiente',
         },
       ]);

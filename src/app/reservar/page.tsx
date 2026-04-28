@@ -77,11 +77,25 @@ export default function ReservarPage() {
                 </div>
               </div>
               
-              <div className="pt-8 border-t border-slate-50">
+              <div className="pt-8 border-t border-slate-50 flex items-center justify-between gap-4">
                 <p className="text-[11px] font-serif italic text-slate-400">
                   Lic. Yesica M. García <br />
                   <span className="text-primary font-sans not-italic font-bold tracking-widest text-[8px] uppercase mt-1 block">Nutricionista · MP 7250</span>
                 </p>
+                <a 
+                  href="https://godreamai.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="opacity-20 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0"
+                >
+                  <Image 
+                    src="/logoMrgDeve.png" 
+                    alt="MrgDeve Logo" 
+                    width={28} 
+                    height={28} 
+                    className="object-contain"
+                  />
+                </a>
               </div>
             </div>
           </div>

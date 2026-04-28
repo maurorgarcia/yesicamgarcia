@@ -137,9 +137,28 @@ export const Footer = () => {
           <p className="text-[11px] uppercase tracking-[0.3em] text-white/30 font-bold">
             © {new Date().getFullYear()} Lic. Yesica M. García — Nutrición de Precisión
           </p>
-          <div className="flex gap-12 text-[11px] uppercase tracking-[0.3em] text-white/30 font-bold">
-            <Link href="#" className="hover:text-accent transition-colors">Legales</Link>
-            <Link href="#" className="hover:text-accent transition-colors">Privacidad</Link>
+          <div className="flex flex-col md:flex-row items-center gap-10">
+            <div className="flex gap-12 text-[11px] uppercase tracking-[0.3em] text-white/30 font-bold">
+              <Link href="#" className="hover:text-accent transition-colors">Legales</Link>
+              <Link href="#" className="hover:text-accent transition-colors">Privacidad</Link>
+            </div>
+            <div className="h-4 w-[1px] bg-white/10 hidden md:block" />
+            <a 
+              href="https://godreamai.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 opacity-30 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 group"
+            >
+              <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-white">Developed by</span>
+              <div className="relative w-8 h-8 group-hover:scale-110 transition-transform duration-500">
+                <Image 
+                  src="/logoMrgDeve.png" 
+                  alt="MrgDeve Logo" 
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </a>
           </div>
         </div>
       </div>
