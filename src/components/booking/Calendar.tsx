@@ -27,38 +27,43 @@ interface CalendarProps {
 export const Calendar = ({ selectedDate, onDateSelect }: CalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date(2024, 0, 1)); // Stable initial date
   const [today, setToday] = useState<Date>(new Date(2024, 0, 1)); // Stable initial date
-
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setCurrentMonth(new Date());
     setToday(startOfToday());
+    setMounted(true);
   }, []);
 
+  if (!mounted) return <div className="h-[400px] w-full bg-accent/5 animate-pulse rounded-[2.5rem]" />;
 
   const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
   const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
 
   const renderHeader = () => {
     return (
-      <div className="flex items-center justify-between mb-12">
-        <h3 className="text-2xl font-serif italic capitalize text-foreground">
-          {format(currentMonth, 'MMMM yyyy', { locale: es })}
-        </h3>
-        <div className="flex gap-4">
+      <div className="flex items-center justify-between mb-10 px-2">
+        <div className="flex flex-col">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-1">Seleccioná una fecha</p>
+          <h3 className="text-3xl font-serif font-bold text-foreground capitalize">
+            {format(currentMonth, 'MMMM yyyy', { locale: es })}
+          </h3>
+        </div>
+        <div className="flex gap-2">
           <button
             onClick={prevMonth}
             disabled={isSameMonth(currentMonth, today)}
-            className="p-3 hover:bg-foreground/5 border border-foreground/5 rounded-full disabled:opacity-10 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/20"
+            className="w-12 h-12 flex items-center justify-center hover:bg-primary/5 border border-slate-100 rounded-2xl disabled:opacity-10 transition-all duration-300"
             aria-label="Mes anterior"
           >
-            <ChevronLeft className="w-4 h-4 text-foreground/60" />
+            <ChevronLeft className="w-5 h-5 text-foreground/60" />
           </button>
           <button
             onClick={nextMonth}
-            className="p-3 hover:bg-foreground/5 border border-foreground/5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/20"
+            className="w-12 h-12 flex items-center justify-center hover:bg-primary/5 border border-slate-100 rounded-2xl transition-all duration-300"
             aria-label="Mes siguiente"
           >
-            <ChevronRight className="w-4 h-4 text-foreground/60" />
+            <ChevronRight className="w-5 h-5 text-foreground/60" />
           </button>
         </div>
       </div>
@@ -68,9 +73,9 @@ export const Calendar = ({ selectedDate, onDateSelect }: CalendarProps) => {
   const renderDays = () => {
     const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
     return (
-      <div className="grid grid-cols-7 mb-6">
+      <div className="grid grid-cols-7 mb-4 border-b border-slate-50 pb-4">
         {days.map((day) => (
-          <div key={day} className="text-center text-[10px] uppercase tracking-widest font-bold text-foreground/30">
+          <div key={day} className="text-center text-[11px] uppercase tracking-[0.1em] font-bold text-muted/40">
             {day}
           </div>
         ))}
@@ -87,60 +92,70 @@ export const Calendar = ({ selectedDate, onDateSelect }: CalendarProps) => {
     const rows = [];
     let days = [];
     let day = startDate;
-    let formattedDate = "";
 
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
-        formattedDate = format(day, "d");
         const cloneDay = day;
         const isDisabled = !isSameMonth(day, monthStart) || isBefore(day, today);
         const isSelected = selectedDate && isSameDay(day, selectedDate);
+        const isToday = isSameDay(day, today);
 
         days.push(
           <button
             key={day.toString()}
             disabled={isDisabled}
             onClick={() => onDateSelect(cloneDay)}
-            aria-label={format(day, "PPPP", { locale: es })}
-            aria-pressed={isSelected || false}
             className={`
-              h-12 w-full flex items-center justify-center text-sm transition-all duration-500 relative group
-              ${isDisabled ? 'text-foreground/10 cursor-not-allowed' : 'text-foreground/60 hover:text-primary'}
-              ${isSelected ? 'text-primary font-bold' : ''}
+              relative h-16 md:h-20 w-full flex flex-col items-center justify-center transition-all duration-300 group
+              ${isDisabled ? 'opacity-10 cursor-not-allowed' : 'hover:z-10'}
             `}
           >
-            <span className="relative z-10">{formattedDate}</span>
+            {/* Selection Background */}
             {isSelected && (
               <motion.div 
-                layoutId="activeDay"
-                className="absolute inset-2 bg-primary/5 rounded-full z-0"
+                layoutId="calendarSelect"
+                className="absolute inset-2 bg-primary rounded-2xl shadow-lg shadow-primary/20 z-0"
               />
             )}
+            
+            {/* Today indicator circle */}
+            {isToday && !isSelected && (
+              <div className="absolute inset-2 border-2 border-primary/20 rounded-2xl z-0" />
+            )}
+
+            {/* Hover Background */}
             {!isDisabled && !isSelected && (
-              <div className="absolute inset-2 bg-foreground/5 rounded-full z-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-2 bg-primary/5 rounded-2xl z-0 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100" />
             )}
-            {isSameDay(day, today) && !isSelected && (
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary/40 rounded-full" />
-            )}
+
+            <span className={`
+              relative z-10 text-base md:text-lg font-medium transition-colors duration-300
+              ${isSelected ? 'text-white' : 'text-foreground/70 group-hover:text-primary'}
+              ${isToday && !isSelected ? 'text-primary font-bold' : ''}
+            `}>
+              {format(day, 'd')}
+            </span>
           </button>
         );
         day = addDays(day, 1);
       }
       rows.push(
-        <div className="grid grid-cols-7 gap-1" key={day.toString()}>
+        <div className="grid grid-cols-7" key={day.toString()}>
           {days}
         </div>
       );
       days = [];
     }
-    return <div className="space-y-1">{rows}</div>;
+    return <div className="divide-y divide-slate-50/50">{rows}</div>;
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full">
       {renderHeader()}
-      {renderDays()}
-      {renderCells()}
+      <div className="bg-white rounded-[2.5rem] p-4 md:p-8 border border-slate-50 shadow-sm">
+        {renderDays()}
+        {renderCells()}
+      </div>
     </div>
   );
 };

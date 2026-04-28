@@ -25,8 +25,8 @@ export const BookingForm = ({ onSubmit, isLoading }: BookingFormProps) => {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto space-y-10">
       <div className="text-center">
-        <h3 className="text-3xl font-serif mb-3">Datos del Paciente</h3>
-        <p className="text-[11px] text-foreground/40 font-sans tracking-wide">Completá la información para finalizar.</p>
+        <h3 className="text-3xl font-serif mb-3">Tus datos de contacto</h3>
+        <p className="text-[11px] text-foreground/40 font-sans tracking-wide">Completá esta info para que pueda registrar tu turno.</p>
       </div>
       
       <div className="space-y-8">
@@ -36,7 +36,7 @@ export const BookingForm = ({ onSubmit, isLoading }: BookingFormProps) => {
             id="name"
             required
             type="text"
-            placeholder="Ej: Yesica García"
+            placeholder="Ej: María García"
             className="w-full px-0 py-3 bg-transparent border-b border-foreground/10 focus:border-primary transition-all duration-500 outline-none font-serif text-xl placeholder:text-foreground/10 text-foreground"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -45,12 +45,12 @@ export const BookingForm = ({ onSubmit, isLoading }: BookingFormProps) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-3">
-            <label htmlFor="phone" className="text-[9px] uppercase tracking-[0.4em] font-bold text-primary ml-1">WhatsApp</label>
+            <label htmlFor="phone" className="text-[9px] uppercase tracking-[0.4em] font-bold text-primary ml-1">Tu WhatsApp</label>
             <input
               id="phone"
               required
               type="tel"
-              placeholder="Ej: 336 467..."
+              placeholder="336 4..."
               className="w-full px-0 py-3 bg-transparent border-b border-foreground/10 focus:border-primary transition-all duration-500 outline-none font-serif text-xl placeholder:text-foreground/10 text-foreground"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -63,7 +63,7 @@ export const BookingForm = ({ onSubmit, isLoading }: BookingFormProps) => {
               id="email"
               required
               type="email"
-              placeholder="hola@email.com"
+              placeholder="tu@email.com"
               className="w-full px-0 py-3 bg-transparent border-b border-foreground/10 focus:border-primary transition-all duration-500 outline-none font-serif text-xl placeholder:text-foreground/10 text-foreground"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -74,7 +74,7 @@ export const BookingForm = ({ onSubmit, isLoading }: BookingFormProps) => {
 
       <div className="space-y-10 pt-2">
         <div className="space-y-5">
-          <label className="text-[9px] uppercase tracking-[0.4em] font-bold text-primary ml-1">Modalidad de pago</label>
+          <label className="text-[9px] uppercase tracking-[0.4em] font-bold text-primary ml-1">¿Cómo vas a abonar?</label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {['Particular', 'Reintegro', 'Obra Social'].map((m) => (
               <button
@@ -94,7 +94,7 @@ export const BookingForm = ({ onSubmit, isLoading }: BookingFormProps) => {
         </div>
 
         <div className="space-y-5">
-          <label className="text-[9px] uppercase tracking-[0.4em] font-bold text-primary ml-1">Lugar de atención</label>
+          <label className="text-[9px] uppercase tracking-[0.4em] font-bold text-primary ml-1">¿Dónde nos vemos?</label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {['Online', 'CEMIR', 'XTREME'].map((l) => (
               <button

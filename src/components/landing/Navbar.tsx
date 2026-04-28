@@ -11,11 +11,23 @@ import Image from 'next/image';
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
+
+      // Active section detection
+      const sections = ['sobre-mi', 'servicios', 'coberturas', 'faq'];
+      const current = sections.find((id) => {
+        const el = document.getElementById(id);
+        if (!el) return false;
+        const rect = el.getBoundingClientRect();
+        return rect.top <= 120 && rect.bottom >= 120;
+      });
+      setActiveSection(current ?? '');
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     if (isOpen) {
@@ -31,10 +43,10 @@ export const Navbar = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { name: 'Perfil', href: '#sobre-mi' },
-    { name: 'Especialidades', href: '#servicios' },
-    { name: 'Obras Sociales', href: '#coberturas' },
-    { name: 'FAQ', href: '#faq' },
+    { name: 'Perfil', href: '#sobre-mi', id: 'sobre-mi' },
+    { name: 'Especialidades', href: '#servicios', id: 'servicios' },
+    { name: 'Obras Sociales', href: '#coberturas', id: 'coberturas' },
+    { name: 'FAQ', href: '#faq', id: 'faq' },
   ];
 
   const scrollToTop = (e: React.MouseEvent) => {
@@ -51,13 +63,16 @@ export const Navbar = () => {
   return (
     <>
       <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? 'py-2' : 'py-3'
+        scrolled ? 'py-2' : 'py-4'
       }`}>
-        {/* Frosted glass background — only when scrolled */}
+        {/* Gold accent line — always visible at top, stays on scroll */}
+        <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-primary/60 via-primary to-primary/60" />
+
+        {/* Background: subtle glass always, solid on scroll */}
         <div className={`absolute inset-0 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/90 backdrop-blur-xl border-b border-slate-100/80 shadow-[0_1px_20px_rgba(0,0,0,0.04)]'
-            : 'bg-transparent'
+            ? 'bg-white/97 backdrop-blur-xl border-b border-slate-100/80 shadow-[0_2px_20px_rgba(0,0,0,0.05)]'
+            : 'bg-white/75 backdrop-blur-md border-b border-slate-100/40'
         }`} />
 
         <div className="container mx-auto px-6 relative flex justify-between items-center">
@@ -78,31 +93,38 @@ export const Navbar = () => {
               <span className="text-xs font-bold tracking-tight text-foreground leading-tight">
                 {SITE_CONFIG.name}
               </span>
-              <span className="text-[7px] uppercase tracking-[0.2em] text-primary font-bold mt-0.5 opacity-70">
+              <span className="text-[7px] uppercase tracking-[0.2em] text-primary font-bold mt-0.5">
                 Nutricionista · MP 7250
               </span>
             </div>
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={(e) => scrollTo(e, link.href)}
-                className="text-[9px] uppercase tracking-[0.18em] font-bold text-foreground/35 hover:text-secondary transition-colors duration-200 relative group"
-              >
-                {link.name}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-secondary/60 transition-all duration-300 group-hover:w-full" />
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center gap-7">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => scrollTo(e, link.href)}
+                  className={`text-[10px] uppercase tracking-[0.16em] font-bold transition-colors duration-200 relative group ${
+                    isActive ? 'text-secondary' : 'text-foreground/35 hover:text-secondary'
+                  }`}
+                >
+                  {link.name}
+                  <span className={`absolute -bottom-0.5 left-0 h-px bg-secondary/60 transition-all duration-300 ${
+                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
+                </Link>
+              );
+            })}
 
             {/* Divider */}
             <div className="w-px h-4 bg-slate-200" />
 
             <Link href="/reservar">
-              <Button className="rounded-full px-5 py-4 bg-secondary hover:bg-secondary/90 text-white border-none text-[9px] uppercase tracking-widest font-bold shadow-md shadow-secondary/10 transition-all duration-300">
+              <Button className="rounded-full px-6 py-4 bg-primary hover:bg-primary/90 text-white border-none text-[9px] uppercase tracking-widest font-bold shadow-md shadow-primary/15 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02]">
                 Agendar Turno
               </Button>
             </Link>
@@ -134,6 +156,9 @@ export const Navbar = () => {
             role="dialog"
             aria-modal="true"
           >
+            {/* Gold accent line at top */}
+            <div className="h-[2px] w-full bg-primary shrink-0" />
+
             {/* Mobile Header */}
             <div className="flex justify-between items-center px-8 py-6 border-b border-slate-50">
               <div className="flex items-center gap-3">
@@ -142,7 +167,7 @@ export const Navbar = () => {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-foreground">Lic. Yesica M. García</span>
-                  <span className="text-[8px] uppercase tracking-widest text-primary font-bold opacity-60">MP 7250</span>
+                  <span className="text-[8px] uppercase tracking-widest text-primary font-bold">MP 7250</span>
                 </div>
               </div>
               <button
@@ -177,7 +202,7 @@ export const Navbar = () => {
                     <span className="text-xl font-bold text-foreground group-hover:text-secondary transition-colors">
                       {link.name}
                     </span>
-                    <span className="text-secondary opacity-0 group-hover:opacity-100 transition-opacity text-lg">→</span>
+                    <span className="text-primary opacity-0 group-hover:opacity-100 transition-opacity text-lg">→</span>
                   </Link>
                 </motion.div>
               ))}
@@ -186,12 +211,12 @@ export const Navbar = () => {
             {/* CTA */}
             <div className="px-8 pb-12 pt-8">
               <Link href="/reservar" className="block" onClick={() => setIsOpen(false)}>
-                <Button className="w-full py-7 text-sm font-bold bg-secondary hover:bg-secondary/90 text-white rounded-2xl border-none uppercase tracking-widest shadow-xl shadow-secondary/15">
+                <Button className="w-full py-7 text-sm font-bold bg-primary hover:bg-primary/90 text-white rounded-2xl border-none uppercase tracking-widest shadow-xl shadow-primary/15">
                   Agendar mi consulta
                 </Button>
               </Link>
               <p className="text-center mt-6 text-[9px] uppercase tracking-[0.3em] font-bold text-foreground/20">
-                Atención Presencial & Online
+                Presencial en San Nicolás · Online para todo el país
               </p>
             </div>
           </motion.div>

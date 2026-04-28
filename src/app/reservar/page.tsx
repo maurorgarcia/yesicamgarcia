@@ -1,88 +1,104 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/landing/Navbar';
 import { Footer } from '@/components/landing/Footer';
-import { BookingManager } from '@/components/booking/BookingManager';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, MapPin, Globe, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
+
+// Carga dinámica del BookingManager sin SSR para evitar errores de hidratación
+const BookingManager = dynamic(
+  () => import('@/components/booking/BookingManager').then((mod) => mod.BookingManager),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="h-[600px] flex flex-col items-center justify-center gap-6">
+        <div className="w-12 h-12 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
+        <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold animate-pulse">Cargando agenda...</p>
+      </div>
+    )
+  }
+);
 
 export default function ReservarPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-24 pb-16">
-        <div className="container mx-auto px-6">
-          {/* Header Section */}
-          <div className="max-w-4xl mx-auto mb-10">
+      <main className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
+        {/* Luz de fondo sutil */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
+
+        <div className="container mx-auto px-6 relative z-10">
+          {/* Encabezado Personal */}
+          <div className="max-w-3xl mx-auto text-center mb-16">
             <Link 
               href="/" 
-              className="inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] font-bold text-muted hover:text-primary transition-colors mb-8 group"
+              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-bold text-muted hover:text-primary transition-all duration-500 mb-10 group"
             >
-              <ChevronLeft size={12} className="group-hover:-translate-x-1 transition-transform" />
+              <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
               Volver al inicio
             </Link>
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
             >
-              <span className="text-primary text-[10px] uppercase tracking-[0.5em] font-bold mb-4 block">
-                Agenda de Turnos
-              </span>
-              <h1 className="text-4xl md:text-5xl font-serif leading-[1.15] tracking-tight text-foreground mb-6">
-                Comenzá tu proceso <br />
-                <span className="italic text-foreground/40 font-light">de transformación.</span>
+              <h1 className="text-4xl md:text-6xl font-serif font-bold leading-tight text-foreground mb-6">
+                Mi agenda <span className="text-primary italic font-light">de turnos</span>
               </h1>
-              <p className="text-editorial max-w-xl text-base">
-                Seleccioná el día y horario que mejor se adapte a tu rutina. 
-                Las sesiones pueden ser presenciales u online según tu preferencia.
+              <p className="text-base md:text-lg text-muted font-sans font-light max-w-xl mx-auto leading-relaxed">
+                Elegí el servicio y el horario que mejor te quede. <br className="hidden md:block" />
+                Trabajemos juntos para lograr tus objetivos.
               </p>
             </motion.div>
           </div>
 
-          {/* Booking Container */}
-          <div className="max-w-6xl mx-auto premium-glass overflow-hidden flex flex-col lg:flex-row min-h-[650px]">
-            {/* Sidebar con Info Contextual */}
-            <div className="w-full lg:w-[320px] bg-foreground/[0.01] p-10 lg:p-12 border-b lg:border-b-0 lg:border-r border-foreground/5 flex flex-col justify-between">
-              <div>
-                <div className="text-[8px] uppercase tracking-[0.4em] text-primary font-bold mb-10">Modalidades de Atención</div>
-                <div className="space-y-10">
-                  <div className="group cursor-default">
-                    <div className="text-xl font-serif italic mb-2 group-hover:text-primary transition-colors">Presencial</div>
-                    <p className="text-[9px] text-foreground/40 uppercase tracking-widest font-bold mb-1">Centro CEMIR</p>
-                    <p className="text-[9px] text-foreground/40 uppercase tracking-widest font-bold">Gimnasio XTREME</p>
-                  </div>
-                  <div className="group cursor-default">
-                    <div className="text-xl font-serif italic mb-2 group-hover:text-primary transition-colors">Online</div>
-                    <p className="text-[9px] text-foreground/40 uppercase tracking-widest font-bold">Plataforma Digital</p>
-                    <p className="text-[9px] text-foreground/40 uppercase tracking-widest font-bold">Desde cualquier lugar</p>
-                  </div>
-                </div>
+          {/* Contenedor de Reserva */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
+            className="max-w-4xl mx-auto bg-white border border-slate-50 rounded-[3rem] shadow-2xl shadow-primary/5 p-8 md:p-14 lg:p-20 relative"
+          >
+            <BookingManager />
 
-                <div className="mt-16 space-y-4">
-                  <div className="p-5 bg-primary/5 rounded-xl border border-primary/10">
-                    <p className="text-[8px] uppercase tracking-widest font-bold text-primary mb-2">Nota importante</p>
-                    <p className="text-[10px] leading-relaxed text-primary/70 font-medium">
-                      Al finalizar la reserva, se abrirá un chat de WhatsApp para confirmar los detalles finales de tu turno.
-                    </p>
-                  </div>
+            {/* Información al pie */}
+            <div className="mt-16 pt-10 border-t border-slate-50 flex flex-col md:flex-row items-center justify-between gap-8 opacity-60">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-accent/30 flex items-center justify-center text-primary">
+                  <MapPin size={18} />
+                </div>
+                <div className="text-left">
+                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground">San Nicolás</p>
+                  <p className="text-[9px] text-muted">Centro CEMIR · Gimnasio XTREME</p>
                 </div>
               </div>
-
-              <div className="mt-16 pt-8 border-t border-foreground/10">
-                <div className="flex items-center gap-3 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-                  <div className="w-6 h-6 rounded-full bg-foreground/10" />
-                  <span className="text-[7px] uppercase tracking-[0.2em] font-bold">Protocolo de Salud <br />& Confidencialidad</span>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-accent/30 flex items-center justify-center text-primary">
+                  <Globe size={18} />
+                </div>
+                <div className="text-left">
+                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground">Consulta Online</p>
+                  <p className="text-[9px] text-muted">Desde cualquier lugar</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary">
+                  <ShieldCheck size={18} />
+                </div>
+                <div className="text-left">
+                  <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-foreground">Privacidad <br />Garantizada</span>
                 </div>
               </div>
             </div>
-
-            {/* Booking Component Area */}
-            <div className="flex-1 p-6 md:p-12 lg:p-16 bg-background/40">
-              <BookingManager />
-            </div>
+          </motion.div>
+          
+          <div className="mt-12 text-center">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted font-medium">
+              Lic. Yesica M. García · Nutricionista · MP 7250
+            </p>
           </div>
         </div>
       </main>
