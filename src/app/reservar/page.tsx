@@ -64,32 +64,25 @@ export default function ReservarPage() {
           >
             <BookingManager />
 
-            {/* Información al pie */}
-            <div className="mt-16 pt-10 border-t border-slate-50 flex flex-col md:flex-row items-center justify-between gap-8 opacity-60">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-accent/30 flex items-center justify-center text-primary">
-                  <MapPin size={18} />
+            {/* Información de confianza sutil */}
+            <div className="mt-12 pt-10 border-t border-slate-50">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <div className="flex flex-col items-center text-center px-4">
+                  <MapPin size={16} className="text-primary/40 mb-3" />
+                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground mb-1">San Nicolás</p>
+                  <p className="text-[9px] text-muted leading-tight">Centro CEMIR · Gimnasio XTREME</p>
                 </div>
-                <div className="text-left">
-                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground">San Nicolás</p>
-                  <p className="text-[9px] text-muted">Centro CEMIR · Gimnasio XTREME</p>
+                
+                <div className="flex flex-col items-center text-center px-4">
+                  <Globe size={16} className="text-primary/40 mb-3" />
+                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground mb-1">Consulta Online</p>
+                  <p className="text-[9px] text-muted leading-tight">Atención remota personalizada</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-accent/30 flex items-center justify-center text-primary">
-                  <Globe size={18} />
-                </div>
-                <div className="text-left">
-                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground">Consulta Online</p>
-                  <p className="text-[9px] text-muted">Desde cualquier lugar</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary">
-                  <ShieldCheck size={18} />
-                </div>
-                <div className="text-left">
-                  <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-foreground">Privacidad <br />Garantizada</span>
+
+                <div className="flex flex-col items-center text-center px-4">
+                  <ShieldCheck size={16} className="text-primary/40 mb-3" />
+                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground mb-1">Privacidad</p>
+                  <p className="text-[9px] text-muted leading-tight">Datos médicos protegidos</p>
                 </div>
               </div>
             </div>
