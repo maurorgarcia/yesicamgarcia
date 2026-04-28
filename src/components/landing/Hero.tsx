@@ -20,18 +20,14 @@ export const Hero = () => {
         </svg>
       </div>
       
-      {/* Warm Palette Gradients */}
-      <div className="absolute top-[-10%] right-[-5%] w-[45vw] h-[45vw] bg-primary/10 rounded-full blur-[100px] pointer-events-none z-0" />
-      <div className="absolute bottom-[-5%] left-[-5%] w-[35vw] h-[35vw] bg-secondary/15 rounded-full blur-[80px] pointer-events-none z-0" />
+      {/* Simplified Background */}
+      <div className="absolute top-[-10%] right-[-5%] w-[45vw] h-[45vw] bg-primary/5 rounded-full pointer-events-none z-0" />
+      <div className="absolute bottom-[-5%] left-[-5%] w-[35vw] h-[35vw] bg-secondary/5 rounded-full pointer-events-none z-0" />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           <div className="w-full lg:w-[55%] text-left">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-            >
+            <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                 Consulta Presencial y Online
@@ -83,18 +79,12 @@ export const Hero = () => {
                   <div className="text-[9px] uppercase tracking-widest text-muted font-bold opacity-50">Respaldo Científico</div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
-          {/* Visual element with the new palette */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="hidden lg:block w-[45%]"
-          >
+          <div className="hidden lg:block w-[45%]">
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-tr from-primary/10 to-accent/20 rounded-3xl blur-2xl opacity-40" />
+              <div className="absolute -inset-4 bg-primary/5 rounded-3xl opacity-40" />
               <div className="relative aspect-[4/5] rounded-[2.5rem] bg-white border border-white/40 shadow-2xl overflow-hidden group">
                 <Image 
                   src="/fotoNutri.png" 
@@ -123,7 +113,7 @@ export const Hero = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

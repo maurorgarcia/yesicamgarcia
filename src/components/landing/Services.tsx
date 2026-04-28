@@ -41,14 +41,9 @@ export const Services = () => {
     <section id="servicios" className="section-spacing bg-slate-50/50">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center mb-32">
-          <motion.span 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-primary text-[11px] uppercase tracking-[0.5em] font-bold mb-8 block"
-          >
+          <span className="text-primary text-[11px] uppercase tracking-[0.5em] font-bold mb-8 block">
             Mis Especialidades
-          </motion.span>
+          </span>
           <h2 className="text-5xl md:text-7xl font-serif font-bold mb-10 text-foreground leading-tight">
             Especialidades <br />
             <span className="italic text-foreground/40 font-light font-sans tracking-tight">Nutricionales</span>
@@ -59,13 +54,9 @@ export const Services = () => {
         </div>
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {services.map((service, index) => (
-            <motion.div
+          {services.map((service) => (
+            <div
               key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.1, ease: [0.19, 1, 0.22, 1] }}
               className="group p-12 bg-white border border-slate-100 rounded-[2rem] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)] hover:border-primary/10 transition-all duration-700 flex flex-col items-start"
             >
               <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-primary/10 transition-all duration-500 group-hover:rotate-6">
@@ -79,7 +70,7 @@ export const Services = () => {
                 <span className="text-[10px] uppercase tracking-widest font-bold text-primary">Saber más</span>
                 <div className="w-8 h-[1px] bg-primary/30" />
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
