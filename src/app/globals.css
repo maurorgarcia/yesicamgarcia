@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* User Custom Palette: Gold & Stone */
+  --primary: #D99962;      /* Gold/Bronze - Luxury/Authority */
+  --secondary: #F2B680;    /* Soft Sand - Warmth */
+  --accent: #F2D2B6;       /* Beige - Background Accents */
+  --background: #FCF9F7;   /* Creamy White - Comfort */
+  --foreground: #0D0D0D;   /* Rich Black - High Contrast */
+  
+  /* UI Scaling - Making things smaller */
+  --spacing-scale: 0.85;
+  
+  /* Semantic & States */
+  --primary-hover: #BF8756;
+  --muted: #666666;
+  --border: rgba(13, 13, 13, 0.08);
+  
+  --shadow-premium: 0 8px 25px -5px rgba(0, 0, 0, 0.04);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  
+  --font-serif: var(--font-jakarta);
+  --font-sans: var(--font-inter);
+  
+  --shadow-premium: var(--shadow-premium);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/10;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-bold tracking-tight text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .text-editorial {
+    @apply text-sm leading-relaxed text-muted font-sans font-normal;
+  }
+  .title-editorial {
+    @apply text-3xl md:text-5xl font-serif font-extrabold leading-[1.15] tracking-tight text-foreground;
+  }
+  .section-spacing {
+    @apply py-14 md:py-24;
+  }
+  .premium-glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-[0_15px_40px_rgba(0,0,0,0.02)] rounded-[2rem];
+  }
+  .reveal-text {
+    @apply inline-block overflow-hidden align-bottom;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(217, 153, 98, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
