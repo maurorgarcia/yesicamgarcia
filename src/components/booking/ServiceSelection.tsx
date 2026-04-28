@@ -61,62 +61,65 @@ interface ServiceSelectionProps {
 
 export const ServiceSelection = ({ onSelect }: ServiceSelectionProps) => {
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      <div className="text-center mb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-[9px] uppercase tracking-[0.3em] text-primary font-bold mb-6">
+    <div className="w-full max-w-2xl mx-auto">
+      <div className="text-center mb-12">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/5 rounded-full text-[8px] uppercase tracking-[0.3em] text-primary font-bold mb-6">
           Paso 01
         </div>
-        <h3 className="text-4xl font-serif font-bold text-foreground mb-4">¿Cómo puedo ayudarte?</h3>
-        <p className="text-base text-muted font-light max-w-md mx-auto">Elegí el servicio que buscás para que podamos empezar.</p>
+        <h3 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">¿Cómo puedo ayudarte?</h3>
+        <p className="text-sm text-muted font-light max-w-xs mx-auto">Elegí el servicio que buscás para que podamos empezar.</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-5">
+      <div className="space-y-3">
         {services.map((service, index) => (
           <motion.button
             key={service.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1, duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+            transition={{ delay: index * 0.05, duration: 0.6 }}
             onClick={() => onSelect(service)}
-            className="w-full group relative flex items-center gap-6 p-8 bg-accent/20 border border-white rounded-[2.5rem] hover:bg-white hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-700 text-left"
+            className="w-full group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 bg-white border border-slate-100 rounded-[2rem] hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 text-left"
           >
-            <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shrink-0 border border-slate-100">
-              <service.icon size={28} />
+            {/* Icono más sutil */}
+            <div className="w-12 h-12 rounded-2xl bg-accent/30 flex items-center justify-center text-primary/60 group-hover:bg-primary group-hover:text-white transition-all duration-500 shrink-0">
+              <service.icon size={20} strokeWidth={1.5} />
             </div>
             
-            <div className="flex-1">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
-                <h4 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{service.name}</h4>
-                <div className="flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-slate-100 group-hover:border-primary/20 transition-colors">
-                  <Banknote size={12} className="text-primary" />
-                  <span className="text-xs font-bold text-foreground">{service.price}</span>
-                </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-4">
+                <h4 className="text-base md:text-lg font-bold text-foreground group-hover:text-primary transition-colors truncate">
+                  {service.name}
+                </h4>
+                <span className="text-sm md:text-base font-serif font-bold text-primary shrink-0">
+                  {service.price}
+                </span>
               </div>
-              <p className="text-[10px] uppercase tracking-widest text-muted font-bold">{service.description}</p>
               
-              <div className="flex items-center gap-6 mt-4 opacity-60 group-hover:opacity-100 transition-opacity">
-                <div className="flex items-center gap-2">
-                  <Clock size={14} className="text-primary" />
-                  <span className="text-xs text-muted font-medium">{service.duration}</span>
+              <div className="flex items-center justify-between mt-1">
+                <p className="text-[9px] uppercase tracking-widest text-muted font-bold truncate pr-4">
+                  {service.description}
+                </p>
+                <div className="flex items-center gap-1.5 opacity-40 shrink-0">
+                  <Clock size={10} />
+                  <span className="text-[9px] font-medium">{service.duration}</span>
                 </div>
               </div>
             </div>
 
-            <div className="hidden md:flex w-12 h-12 rounded-full bg-white border border-slate-100 items-center justify-center text-slate-300 group-hover:border-primary group-hover:text-primary group-hover:shadow-md transition-all duration-500">
-              <ChevronRight size={20} />
+            {/* Indicador de flecha muy fino */}
+            <div className="hidden md:flex opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500 text-primary">
+              <ChevronRight size={16} />
             </div>
-
-            {/* Subtle selection overlay on hover */}
-            <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/[0.01] rounded-[2.5rem] pointer-events-none transition-colors duration-700" />
           </motion.button>
         ))}
       </div>
 
-      <div className="mt-16 text-center">
-        <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/40 backdrop-blur-sm rounded-full border border-white/50 text-[10px] uppercase tracking-widest text-muted font-bold">
-          <Info size={14} className="text-primary" />
-          ¿Tenés dudas? Escribinos por WhatsApp
-        </div>
+      <div className="mt-12 text-center">
+        <p className="text-[9px] uppercase tracking-widest text-muted font-bold flex items-center justify-center gap-2">
+          <span className="w-1 h-1 rounded-full bg-primary/40" />
+          Precios expresados en Pesos Argentinos
+          <span className="w-1 h-1 rounded-full bg-primary/40" />
+        </p>
       </div>
     </div>
   );
