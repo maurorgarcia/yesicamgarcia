@@ -41,7 +41,12 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+            >
               {[
                 'Apsot', 'Ospsip', 'Dasuten', 'Galeno', 'Medicus', 
                 'Medife', 'Ospat', 'Omint', 'Osjera', 'Ospedyc', 
@@ -50,19 +55,15 @@ export default function Home() {
                 'Ceramistas', 'Famyl S.A', 'FSST', 'Guincheros', 'Hemisferio Salud',
                 'Marina Mercante', 'Personal Papel', 'Isspica', 'Maestranza', 'Osdipp',
                 'Osmata', 'Ospacarp', 'Ospatca', 'Ospena', 'Ospep', 'Ospif', 'Osseg', 'Visitar SRL'
-              ].map((obra, i) => (
-                <motion.div 
+              ].map((obra) => (
+                <div 
                   key={obra}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.02 }}
-                  className="p-4 border border-primary/5 bg-accent/5 text-xs uppercase tracking-widest font-bold text-foreground/60 text-center hover:border-primary/30 hover:bg-white hover:text-primary hover:shadow-xl hover:-translate-y-1 transition-all duration-500 rounded-xl cursor-default"
+                  className="p-4 border border-primary/5 bg-accent/5 text-xs uppercase tracking-widest font-bold text-foreground/60 text-center hover:border-primary/30 hover:bg-white hover:text-primary transition-all duration-500 rounded-xl cursor-default"
                 >
                   {obra}
-                </motion.div>
+                </div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 

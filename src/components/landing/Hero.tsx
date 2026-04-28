@@ -13,7 +13,7 @@ export const Hero = () => {
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="premium-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-              <circle cx="1" cy="1" r="0.8" fill="var(--primary)" />
+              <circle cx="1" cy="1" r="0.8" fill="#D4A373" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#premium-grid)" />
@@ -108,7 +108,7 @@ export const Hero = () => {
                 {/* Artistic overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-40 pointer-events-none" />
                 
-                <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 p-4 sm:p-5 bg-white/90 backdrop-blur-md shadow-xl rounded-2xl border border-foreground/5 z-20">
+                <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 p-4 sm:p-5 bg-white shadow-xl rounded-2xl border border-foreground/5 z-20">
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

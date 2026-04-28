@@ -159,7 +159,7 @@ export const AboutMe = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedImg(null)}
-            className="fixed inset-0 z-[100] bg-foreground/90 backdrop-blur-sm flex items-center justify-center p-6 md:p-12"
+            className="fixed inset-0 z-[100] bg-foreground/95 flex items-center justify-center p-6 md:p-12"
           >
             <motion.button
               className="absolute top-8 right-8 text-white/60 hover:text-white transition-colors"
