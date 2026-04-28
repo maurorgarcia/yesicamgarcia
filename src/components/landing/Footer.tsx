@@ -55,6 +55,7 @@ export const Footer = () => {
                   src="/logo.png" 
                   alt={SITE_CONFIG.name} 
                   fill
+                  sizes="56px"
                   className="object-contain group-hover:scale-105 transition-all duration-500" 
                 />
               </div>

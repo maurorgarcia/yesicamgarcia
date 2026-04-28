@@ -29,6 +29,7 @@ export const AboutMe = () => {
                   src="/logo.png" 
                   alt="Identity" 
                   fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-contain opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-[2s] grayscale brightness-0 p-20" 
                 />
                 {/* Subtle overlay */}
@@ -131,6 +132,7 @@ export const AboutMe = () => {
                     src={cert.img} 
                     alt={cert.title} 
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-contain p-4 group-hover:scale-105 transition-transform duration-700" 
                   />
                   <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

@@ -48,6 +48,7 @@ export const Navbar = () => {
               src="/logo.png" 
               alt={SITE_CONFIG.name} 
               fill
+              sizes="48px"
               className="object-contain group-hover:scale-105 transition-transform duration-500" 
             />
           </div>
@@ -119,7 +120,7 @@ export const Navbar = () => {
               <div className="absolute top-0 left-0 w-full p-8 flex justify-between items-center bg-white">
                 <div className="flex items-center gap-3">
                   <div className="relative w-10 h-10">
-                    <Image src="/logo.png" alt="Logo" fill className="object-contain" />
+                    <Image src="/logo.png" alt="Logo" fill sizes="40px" className="object-contain" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-sm font-serif font-bold text-foreground">Lic. Yesica M. García</span>
