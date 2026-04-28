@@ -7,20 +7,28 @@ import { ChevronDown } from 'lucide-react';
 const faqs = [
   {
     question: '¿Cómo es la primera consulta?',
-    answer: 'La primera sesión es una entrevista clínica profunda donde evaluamos tu historia médica, hábitos actuales y objetivos. Si la consulta es presencial, también realizamos una medición antropométrica inicial.'
+    answer: 'Es una entrevista clínica donde charlamos sobre tu historia, tus hábitos y lo que querés mejorar. Si es presencial, también hacemos una evaluación antropométrica. La idea es que yo entienda tu situación antes de diseñar cualquier plan.'
   },
   {
     question: '¿Atendés por obra social?',
-    answer: 'Sí, atiendo a través de una amplia red de obras sociales y prepagas. También podés realizar la consulta de forma particular y solicitar el recibo para gestionar el reintegro con tu cobertura.'
+    answer: 'Sí. Trabajo con más de 37 obras sociales y prepagas. Si tu cobertura no está en la lista, podés consultar igual — muchas veces se puede gestionar el reintegro.'
   },
   {
-    question: '¿Qué necesito para la primera vez?',
-    answer: 'Si tenés análisis de sangre recientes (últimos 6 meses), es ideal que los traigas o los envíes previamente. No es excluyente, pero ayuda a tener un panorama clínico más completo.'
+    question: '¿Qué necesito para la primera consulta?',
+    answer: 'Si tenés análisis de sangre recientes (últimos 6 meses), es ideal que los traigas o los mandes antes. No es obligatorio, pero ayuda a tener un panorama más completo desde el primer día.'
   },
   {
-    question: '¿La modalidad online es efectiva?',
-    answer: 'Absolutamente. La base de un buen plan es la educación y el diseño de la estrategia. Si bien no realizamos antropometría física, usamos otros indicadores de progreso muy precisos.'
-  }
+    question: '¿La consulta online funciona igual?',
+    answer: 'Sí. Trabajo con pacientes de todo el país de forma online con la misma metodología. No hacemos antropometría física, pero usamos otros indicadores de progreso muy precisos.'
+  },
+  {
+    question: '¿Con qué frecuencia son los seguimientos?',
+    answer: 'Depende del caso y los objetivos. En general, el primer control es a las 3-4 semanas. Después ajustamos la frecuencia según cómo vayas avanzando.'
+  },
+  {
+    question: '¿Puedo consultar por WhatsApp entre sesiones?',
+    answer: 'Sí, tengo un canal de comunicación para dudas puntuales entre consultas. No reemplaza la sesión, pero si surgió algo importante, hablamos.'
+  },
 ];
 
 export const FAQ = () => {
@@ -31,8 +39,8 @@ export const FAQ = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-20">
-            <span className="text-primary text-[11px] uppercase tracking-[0.5em] font-bold mb-6 block">Preguntas frecuentes</span>
-            <h2 className="text-5xl md:text-6xl font-serif font-black text-foreground">Despejá tus <span className="text-secondary italic font-light">dudas</span></h2>
+            <span className="text-primary text-[11px] uppercase tracking-[0.4em] font-bold mb-6 block">Preguntas Frecuentes</span>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground">Todo lo que <span className="text-secondary">necesitás saber</span></h2>
           </div>
  
           <div className="space-y-6">

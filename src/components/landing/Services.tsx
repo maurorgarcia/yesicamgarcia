@@ -6,32 +6,32 @@ import { Apple, Activity, ClipboardList, MonitorSmartphone, Target, ShieldCheck 
 const services = [
   {
     title: 'Nutrición Integral',
-    description: 'Enfoque personalizado para mejorar tus hábitos alimentarios y alcanzar un bienestar óptimo mediante ciencia aplicada.',
+    description: 'Trabajo con vos para entender tu historia, tus hábitos y tus objetivos. Nada de plantillas; cada plan lo construyo desde cero según tu realidad.',
     icon: ShieldCheck,
   },
   {
     title: 'Antropometría ISAK II',
-    description: 'Evaluación técnica de la composición corporal (masa grasa, muscular y ósea) para un diagnóstico de precisión.',
+    description: 'Con mi certificación ISAK II evalúo tu composición corporal con precisión técnica — masa grasa, muscular y ósea — para un diagnóstico real, no estimado.',
     icon: Activity,
   },
   {
     title: 'Nutrición Deportiva',
-    description: 'Optimización del rendimiento, recuperación y composición corporal para atletas y personas físicamente activas.',
+    description: 'Ayudo a deportistas y personas activas a rendir mejor, recuperarse más rápido y sostener una composición corporal acorde a su entrenamiento.',
     icon: Target,
   },
   {
-    title: 'Planes Nutricionales',
-    description: 'Diseño de estrategias alimentarias personalizadas con objetivos claros y seguimiento continuo.',
+    title: 'Planes Personalizados',
+    description: 'Diseño estrategias alimentarias con objetivos concretos y revisiones periódicas. El seguimiento es parte del proceso, no un extra.',
     icon: ClipboardList,
   },
   {
-    title: 'Consultoría Online',
-    description: 'Atención profesional remota con la misma rigurosidad, accesible desde cualquier ubicación.',
+    title: 'Consulta Online',
+    description: 'Atiendo pacientes de todo el país con la misma dedicación que en consultorio. La distancia no es una excusa para descuidar tu salud.',
     icon: MonitorSmartphone,
   },
   {
     title: 'Educación Alimentaria',
-    description: 'Desarrollo de habilidades y conocimientos para la autogestión de una alimentación saludable y basada en evidencia.',
+    description: 'Mi objetivo es que aprendas a elegir bien sin depender siempre de mí. Te doy herramientas reales para tomar decisiones con criterio.',
     icon: Apple,
   },
 ];
@@ -45,21 +45,21 @@ export const Services = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-primary text-[12px] uppercase tracking-[0.6em] font-bold mb-10 block"
+            className="text-primary text-[11px] uppercase tracking-[0.4em] font-bold mb-10 block"
           >
-            Mis Especialidades
+            Áreas de Especialidad
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-7xl lg:text-8xl font-serif font-black mb-12 text-foreground leading-[0.95]"
+            className="title-editorial mb-12 text-foreground"
           >
-            Abordaje <br />
-            <span className="italic text-secondary font-light font-serif">Integrativo</span>
+            Soluciones a <br />
+            <span className="text-secondary">tu medida</span>
           </motion.h2>
-          <p className="text-xl text-muted font-sans max-w-2xl mx-auto leading-relaxed font-light">
-            Soluciones personalizadas con respaldo científico para potenciar tu salud, rendimiento y relación con la comida.
+          <p className="text-editorial max-w-2xl mx-auto">
+            Abordajes personalizados para potenciar tu salud física y optimizar tus hábitos alimentarios.
           </p>
         </div>
         
@@ -71,20 +71,17 @@ export const Services = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.19, 1, 0.22, 1] }}
-              className="group p-14 bg-white border border-slate-100 rounded-[3rem] hover:shadow-[0_50px_100px_-20px_rgba(59,82,51,0.08)] hover:border-secondary/20 transition-all duration-700 flex flex-col items-start relative overflow-hidden"
+              className="group p-14 bg-white border border-slate-100 rounded-[3rem] hover:shadow-[0_40px_80px_-20px_rgba(27,63,57,0.05)] hover:border-secondary/20 transition-all duration-700 flex flex-col items-start relative overflow-hidden"
             >
-              {/* Corner accent */}
-              <div className="absolute top-0 right-0 w-24 h-24 bg-secondary/5 -mr-12 -mt-12 rounded-full group-hover:scale-150 transition-transform duration-700" />
-              
-              <div className="w-16 h-16 bg-secondary/5 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-secondary group-hover:text-white transition-all duration-500 group-hover:rotate-12 shadow-inner">
+              <div className="w-16 h-16 bg-secondary/5 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-secondary group-hover:text-white transition-all duration-500 shadow-inner">
                 <service.icon size={28} className="text-secondary group-hover:text-white transition-colors" />
               </div>
-              <h3 className="text-3xl font-serif font-black mb-6 text-foreground group-hover:text-secondary transition-colors duration-500 leading-tight">{service.title}</h3>
-              <p className="text-base leading-relaxed text-muted font-sans font-light opacity-80 group-hover:opacity-100 transition-opacity">
+              <h3 className="text-2xl font-bold mb-6 text-foreground group-hover:text-secondary transition-colors duration-500 leading-tight">{service.title}</h3>
+              <p className="text-sm leading-relaxed text-muted font-sans font-light opacity-80">
                 {service.description}
               </p>
-              <div className="mt-12 pt-10 border-t border-slate-50 w-full flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0">
-                <span className="text-[11px] uppercase tracking-[0.3em] font-bold text-secondary">Ver detalles</span>
+              <div className="mt-12 pt-10 border-t border-slate-50 w-full flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-700">
+                <span className="text-[11px] uppercase tracking-[0.2em] font-bold text-secondary">Más información</span>
                 <div className="w-12 h-[2px] bg-secondary/20" />
               </div>
             </motion.div>

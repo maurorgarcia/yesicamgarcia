@@ -14,11 +14,10 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 40);
     };
-    window.addEventListener('scroll', handleScroll);
-    
-    // Lock body scroll when menu is open
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -43,154 +42,157 @@ export const Navbar = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const scrollTo = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    const id = href.replace('#', '');
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
-      <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled 
-          ? 'bg-white py-2 border-b border-slate-100 shadow-sm' 
-          : 'bg-transparent py-4'
-      }`}
-    >
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link href="/" onClick={scrollToTop} className="group flex items-center gap-3">
-          <div className="relative w-12 h-12 overflow-hidden">
-            <Image 
-              src="/logo.png" 
-              alt={SITE_CONFIG.name} 
-              fill
-              sizes="48px"
-              className="object-contain group-hover:scale-105 transition-transform duration-500" 
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xs font-serif font-bold tracking-tight text-foreground leading-tight">
-              {SITE_CONFIG.name}
-            </span>
-            <span className="text-[7px] uppercase tracking-[0.2em] text-primary font-bold">
-              Nutrición Clínica & Deportiva
-            </span>
-          </div>
-        </Link>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        scrolled ? 'py-2' : 'py-3'
+      }`}>
+        {/* Frosted glass background — only when scrolled */}
+        <div className={`absolute inset-0 transition-all duration-500 ${
+          scrolled
+            ? 'bg-white/90 backdrop-blur-xl border-b border-slate-100/80 shadow-[0_1px_20px_rgba(0,0,0,0.04)]'
+            : 'bg-transparent'
+        }`} />
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-10">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-xs uppercase tracking-[0.2em] font-bold text-muted hover:text-primary transition-all relative group"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-primary transition-all duration-300 group-hover:w-full" />
-            </Link>
-          ))}
-          <Link href="/reservar">
-            <Button 
-              variant="primary"
-              size="sm" 
-              className="rounded-full px-6 shadow-md shadow-primary/10"
-            >
-              Agenda Clínica
-            </Button>
+        <div className="container mx-auto px-6 relative flex justify-between items-center">
+          {/* Brand */}
+          <Link href="/" onClick={scrollToTop} className="group flex items-center gap-3">
+            <div className={`relative overflow-hidden transition-all duration-500 ${
+              scrolled ? 'w-9 h-9' : 'w-11 h-11'
+            } bg-white rounded-xl p-1.5 shadow-sm border border-slate-100`}>
+              <Image
+                src="/logo.png"
+                alt={SITE_CONFIG.name}
+                fill
+                sizes="44px"
+                className="object-contain group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs font-bold tracking-tight text-foreground leading-tight">
+                {SITE_CONFIG.name}
+              </span>
+              <span className="text-[7px] uppercase tracking-[0.2em] text-primary font-bold mt-0.5 opacity-70">
+                Nutricionista · MP 7250
+              </span>
+            </div>
           </Link>
+
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={(e) => scrollTo(e, link.href)}
+                className="text-[9px] uppercase tracking-[0.18em] font-bold text-foreground/35 hover:text-secondary transition-colors duration-200 relative group"
+              >
+                {link.name}
+                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-secondary/60 transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ))}
+
+            {/* Divider */}
+            <div className="w-px h-4 bg-slate-200" />
+
+            <Link href="/reservar">
+              <Button className="rounded-full px-5 py-4 bg-secondary hover:bg-secondary/90 text-white border-none text-[9px] uppercase tracking-widest font-bold shadow-md shadow-secondary/10 transition-all duration-300">
+                Agendar Turno
+              </Button>
+            </Link>
+          </div>
+
+          {/* Mobile Toggle */}
+          <button
+            className="md:hidden p-2 text-foreground/50 hover:text-secondary transition-colors focus:outline-none rounded-lg"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
+            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
+      </nav>
 
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden p-2 text-foreground/60 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-md" 
-          onClick={() => setIsOpen(!isOpen)}
-          aria-expanded={isOpen}
-          aria-controls="mobile-menu"
-          aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
-        >
-          {isOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </div>
-    </nav>
-
-      {/* Mobile Menu Overlay - Outside nav for total independence */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden fixed inset-0 z-[9999] bg-white w-full h-full"
-            style={{ backgroundColor: '#FFFFFF', opacity: 1 }}
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ duration: 0.35, ease: [0.19, 1, 0.22, 1] }}
+            className="md:hidden fixed inset-0 z-[9999] bg-white w-full h-full flex flex-col"
             role="dialog"
             aria-modal="true"
           >
-            <div className="flex flex-col h-full w-full p-8 pt-32 overflow-y-auto">
-              <div className="absolute top-0 left-0 w-full p-8 flex justify-between items-center bg-white">
-                <div className="flex items-center gap-3">
-                  <div className="relative w-10 h-10">
-                    <Image src="/logo.png" alt="Logo" fill sizes="40px" className="object-contain" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-serif font-bold text-foreground">Lic. Yesica M. García</span>
-                  </div>
+            {/* Mobile Header */}
+            <div className="flex justify-between items-center px-8 py-6 border-b border-slate-50">
+              <div className="flex items-center gap-3">
+                <div className="relative w-9 h-9">
+                  <Image src="/logo.png" alt="Logo" fill sizes="36px" className="object-contain" />
                 </div>
-                <button 
-                  className="p-2 text-foreground/40 hover:text-primary transition-colors"
-                  onClick={() => setIsOpen(false)}
+                <div className="flex flex-col">
+                  <span className="text-sm font-bold text-foreground">Lic. Yesica M. García</span>
+                  <span className="text-[8px] uppercase tracking-widest text-primary font-bold opacity-60">MP 7250</span>
+                </div>
+              </div>
+              <button
+                className="p-2 text-foreground/30 hover:text-secondary transition-colors rounded-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Links */}
+            <div className="flex flex-col px-8 pt-10 flex-1">
+              {navLinks.map((link, idx) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.05 * idx }}
                 >
-                  <X size={32} />
-                </button>
-              </div>
-
-              {/* Navigation Links */}
-              <div className="flex flex-col space-y-8 mt-4">
-                {navLinks.map((link, idx) => (
-                  <motion.div
-                    key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 * idx }}
+                  <Link
+                    href={link.href}
+                    className="flex items-center justify-between py-5 border-b border-slate-50 group"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsOpen(false);
+                      const id = link.href.replace('#', '');
+                      setTimeout(() => {
+                        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+                      }, 350);
+                    }}
                   >
-                    <Link
-                      href={link.href}
-                      className="text-2xl font-serif italic text-foreground block py-3 border-b border-primary/5"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsOpen(false);
-                        const targetId = link.href.replace('#', '');
-                        const target = document.getElementById(targetId);
-                        if (target) {
-                          setTimeout(() => {
-                            target.scrollIntoView({ behavior: 'smooth' });
-                          }, 300);
-                        }
-                      }}
-                    >
+                    <span className="text-xl font-bold text-foreground group-hover:text-secondary transition-colors">
                       {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
+                    </span>
+                    <span className="text-secondary opacity-0 group-hover:opacity-100 transition-opacity text-lg">→</span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
 
-              {/* CTA Section */}
-              <div className="mt-auto pt-10 border-t border-primary/5 pb-8">
-                <Link href="/reservar" className="w-full">
-                  <Button 
-                    variant="primary" 
-                    size="lg" 
-                    className="w-full py-7 text-base shadow-xl shadow-primary/10 rounded-2xl"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Agendar mi consulta
-                  </Button>
-                </Link>
-                <p className="text-center mt-6 text-[10px] uppercase tracking-[0.3em] font-bold text-primary opacity-40">
-                  Atención Presencial & Online
-                </p>
-              </div>
+            {/* CTA */}
+            <div className="px-8 pb-12 pt-8">
+              <Link href="/reservar" className="block" onClick={() => setIsOpen(false)}>
+                <Button className="w-full py-7 text-sm font-bold bg-secondary hover:bg-secondary/90 text-white rounded-2xl border-none uppercase tracking-widest shadow-xl shadow-secondary/15">
+                  Agendar mi consulta
+                </Button>
+              </Link>
+              <p className="text-center mt-6 text-[9px] uppercase tracking-[0.3em] font-bold text-foreground/20">
+                Atención Presencial & Online
+              </p>
             </div>
           </motion.div>
         )}

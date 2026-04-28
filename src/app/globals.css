@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  /* Enhanced Palette: Organic & Authority */
-  --primary: #B46B39;      /* Terracotta - Vitality */
-  --secondary: #3B5233;    /* Forest Green - Growth/Nature */
-  --accent: #F2D2B6;       /* Sand - Background Accents */
-  --background: #FCF9F7;   /* Creamy White */
-  --foreground: #1A1A1A;   /* Deep Charcoal */
+  /* Refined Palette: Emerald & Gold Authority */
+  --primary: #C5A059;      /* Bronzed Gold - Luxury & Precision */
+  --secondary: #1B3F39;    /* Deep Emerald - Medical Health & Growth */
+  --accent: #F4EFEA;       /* Soft Stone - Backgrounds */
+  --background: #FCFBF9;   /* Pure Pearl */
+  --foreground: #121212;   /* Obsidian */
   
   --spacing-scale: 0.85;
   
-  --primary-hover: #965A30;
-  --muted: #666666;
-  --border: rgba(26, 26, 26, 0.08);
+  --primary-hover: #A68545;
+  --muted: #707070;
+  --border: rgba(27, 63, 57, 0.08);
   
-  --shadow-premium: 0 10px 30px -5px rgba(180, 107, 57, 0.1);
+  --shadow-premium: 0 12px 40px -10px rgba(27, 63, 57, 0.12);
 }
 
 @theme inline {
@@ -26,11 +26,16 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   
-  --font-serif: var(--font-playfair);
+  --font-serif: var(--font-outfit);
   --font-sans: var(--font-jakarta);
   --font-mono: var(--font-inter);
   
   --shadow-premium: var(--shadow-premium);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 92%; /* Achicamos la base para que al 100% se vea como vos querés */
 }
 
 @layer base {
@@ -60,13 +65,16 @@
 
 @layer utilities {
   .text-editorial {
-    @apply text-base leading-relaxed text-muted font-sans font-normal;
+    font-size: clamp(0.9rem, 0.85rem + 0.25vw, 1.1rem);
+    @apply leading-relaxed text-muted font-sans font-light;
   }
   .title-editorial {
-    @apply text-4xl md:text-6xl lg:text-7xl font-serif font-black leading-[1.05] tracking-tight text-foreground;
+    /* Tipografía fluida: la achicamos un poquito más */
+    font-size: clamp(2rem, 1.2rem + 3vw, 4.2rem);
+    @apply font-serif font-bold leading-[1.1] tracking-tight text-foreground;
   }
   .section-spacing {
-    @apply py-20 md:py-32;
+    @apply py-14 md:py-20 lg:py-24;
   }
   .premium-glass {
     @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-[0_15px_40px_rgba(0,0,0,0.02)] rounded-[2rem];
@@ -78,6 +86,7 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 92%; /* Normalized for 100% zoom preference */
 }
 
 /* Custom Scrollbar */
@@ -86,7 +95,7 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(217, 153, 98, 0.05);
+  background: rgba(27, 63, 57, 0.05);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -98,9 +107,4 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
 }
