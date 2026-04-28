@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const Hero = () => {
   return (
@@ -95,10 +96,12 @@ export const Hero = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-tr from-primary/10 to-accent/20 rounded-3xl blur-2xl opacity-40" />
               <div className="relative aspect-[4/5] rounded-[2.5rem] bg-white border border-white/40 shadow-2xl overflow-hidden group">
-                <img 
+                <Image 
                   src="/fotoNutri.png" 
                   alt="Lic. Yesica M. García" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2s] ease-out" 
+                  fill
+                  priority
+                  className="object-cover group-hover:scale-105 transition-transform duration-[2s] ease-out" 
                 />
                 
                 {/* Artistic overlay */}

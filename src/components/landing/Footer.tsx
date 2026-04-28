@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Mail, MapPin } from 'lucide-react';
 import { SITE_CONFIG } from '@/lib/constants';
+import Image from 'next/image';
 
 const InstagramIcon = ({ size = 16, className = "" }) => (
   <svg 
@@ -50,10 +51,11 @@ export const Footer = () => {
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="group flex items-center gap-3 mb-8">
               <div className="relative w-14 h-14 overflow-hidden">
-                <img 
+                <Image 
                   src="/logo.png" 
                   alt={SITE_CONFIG.name} 
-                  className="w-full h-full object-contain group-hover:scale-105 transition-all duration-500" 
+                  fill
+                  className="object-contain group-hover:scale-105 transition-all duration-500" 
                 />
               </div>
               <div className="flex flex-col">

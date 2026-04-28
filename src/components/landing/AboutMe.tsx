@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export const AboutMe = () => {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
@@ -24,10 +25,11 @@ export const AboutMe = () => {
               {/* Premium image frame */}
               <div className="absolute -inset-4 border border-primary/10 rounded-[2.5rem] translate-x-4 translate-y-4 pointer-events-none" />
               <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-accent/5 border border-primary/5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] flex items-center justify-center p-20 group">
-                <img 
+                <Image 
                   src="/logo.png" 
                   alt="Identity" 
-                  className="w-full h-full object-contain opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-[2s] grayscale brightness-0" 
+                  fill
+                  className="object-contain opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-[2s] grayscale brightness-0 p-20" 
                 />
                 {/* Subtle overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent" />
@@ -125,10 +127,11 @@ export const AboutMe = () => {
                 onClick={() => setSelectedImg(cert.img)}
               >
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-primary/10 bg-accent/5 mb-6 group-hover:border-primary/30 transition-all duration-500 shadow-sm hover:shadow-xl relative">
-                  <img 
+                  <Image 
                     src={cert.img} 
                     alt={cert.title} 
-                    className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700" 
+                    fill
+                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-700" 
                   />
                   <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <div className="w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center text-primary transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
@@ -172,9 +175,11 @@ export const AboutMe = () => {
               className="relative max-w-5xl w-full aspect-auto bg-white rounded-2xl overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <img 
+              <Image 
                 src={selectedImg} 
                 alt="Credential" 
+                width={1200}
+                height={800}
                 className="w-full h-full object-contain max-h-[85vh]" 
               />
             </motion.div>

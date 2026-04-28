@@ -6,6 +6,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { SITE_CONFIG } from '@/lib/constants';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,10 +44,11 @@ export const Navbar = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         <Link href="/" onClick={scrollToTop} className="group flex items-center gap-3">
           <div className="relative w-12 h-12 overflow-hidden">
-            <img 
+            <Image 
               src="/logo.png" 
               alt={SITE_CONFIG.name} 
-              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" 
+              fill
+              className="object-contain group-hover:scale-105 transition-transform duration-500" 
             />
           </div>
           <div className="flex flex-col">
@@ -114,10 +116,11 @@ export const Navbar = () => {
             aria-modal="true"
           >
             <div className="flex flex-col h-full w-full p-8 pt-32 overflow-y-auto">
-              {/* Mobile Menu Header */}
               <div className="absolute top-0 left-0 w-full p-8 flex justify-between items-center bg-white">
                 <div className="flex items-center gap-3">
-                  <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain" />
+                  <div className="relative w-10 h-10">
+                    <Image src="/logo.png" alt="Logo" fill className="object-contain" />
+                  </div>
                   <div className="flex flex-col">
                     <span className="text-sm font-serif font-bold text-foreground">Lic. Yesica M. García</span>
                   </div>
