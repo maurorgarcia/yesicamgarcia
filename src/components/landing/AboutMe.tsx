@@ -1,11 +1,22 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 export const AboutMe = () => {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (selectedImg) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImg]);
 
   return (
     <section id="sobre-mi" className="section-spacing bg-white relative overflow-hidden">
@@ -14,7 +25,13 @@ export const AboutMe = () => {
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-32">
-          <div className="w-full lg:w-[45%]">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
+            className="w-full lg:w-[45%]"
+          >
             <div className="relative">
               {/* Premium image frame */}
               <div className="absolute -inset-4 border border-primary/10 rounded-[2.5rem] translate-x-4 translate-y-4 pointer-events-none" />
@@ -31,22 +48,39 @@ export const AboutMe = () => {
               </div>
               
               {/* Floating credential badge */}
-              <div className="absolute -bottom-8 -right-8 p-8 bg-white shadow-2xl rounded-3xl border border-slate-50 hidden md:block">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="absolute -bottom-8 -right-8 p-8 bg-white shadow-2xl rounded-3xl border border-slate-50 hidden md:block"
+              >
                 <div className="text-center">
                   <div className="text-3xl font-serif font-bold text-primary italic">YMG</div>
                   <div className="text-[9px] uppercase tracking-[0.3em] text-muted font-bold mt-1">Sello Profesional</div>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="w-full lg:w-[55%]">
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.19, 1, 0.22, 1], delay: 0.2 }}
+            className="w-full lg:w-[55%]"
+          >
             <div className="space-y-12">
               <div>
-                <span className="inline-flex items-center gap-3 text-primary text-[11px] uppercase tracking-[0.5em] font-bold mb-8">
+                <motion.span 
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  className="inline-flex items-center gap-3 text-primary text-[11px] uppercase tracking-[0.5em] font-bold mb-8"
+                >
                   <span className="w-12 h-[1.5px] bg-primary/30" />
                   Formación & Trayectoria
-                </span>
+                </motion.span>
                 <h2 className="text-5xl md:text-6xl font-serif font-bold leading-[1.1] text-foreground mb-10">
                   Ciencia aplicada a tu <br />
                   <span className="text-primary italic font-light">Bienestar Diario</span>
@@ -79,7 +113,7 @@ export const AboutMe = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* New Titles Section with Lightbox */}
@@ -95,8 +129,12 @@ export const AboutMe = () => {
               { img: '/isak2_titulo.png', title: 'Antropometrista ISAK II', desc: 'Perfil Completo' },
               { img: '/nutricionDeportiva_certificado.png', title: 'Nutrición Deportiva', desc: 'Especialización Avanzada' }
             ].map((cert, i) => (
-              <div 
+              <motion.div 
                 key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2 }}
                 className="group cursor-pointer"
                 onClick={() => setSelectedImg(cert.img)}
               >
@@ -118,7 +156,7 @@ export const AboutMe = () => {
                 </div>
                 <h4 className="text-sm font-serif font-bold text-foreground mb-1">{cert.title}</h4>
                 <p className="text-[11px] text-muted font-bold uppercase tracking-tighter opacity-60">{cert.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

@@ -27,7 +27,11 @@ export const Hero = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           <div className="w-full lg:w-[55%] text-left">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+            >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                 Consulta Presencial y Online
@@ -79,10 +83,15 @@ export const Hero = () => {
                   <div className="text-[9px] uppercase tracking-widest text-muted font-bold opacity-50">Respaldo Científico</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="hidden lg:block w-[45%]">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="hidden lg:block w-[45%]"
+          >
             <div className="relative">
               <div className="absolute -inset-4 bg-primary/5 rounded-3xl opacity-40" />
               <div className="relative aspect-[4/5] rounded-[2.5rem] bg-white border border-white/40 shadow-2xl overflow-hidden group">
@@ -113,7 +122,7 @@ export const Hero = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

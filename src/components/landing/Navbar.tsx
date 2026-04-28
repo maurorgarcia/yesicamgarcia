@@ -17,8 +17,19 @@ export const Navbar = () => {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    
+    // Lock body scroll when menu is open
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   const navLinks = [
     { name: 'Perfil', href: '#sobre-mi' },
@@ -145,16 +156,16 @@ export const Navbar = () => {
                   >
                     <Link
                       href={link.href}
-                      className="text-4xl font-serif italic text-foreground block py-2"
+                      className="text-2xl font-serif italic text-foreground block py-3 border-b border-primary/5"
                       onClick={(e) => {
                         e.preventDefault();
                         setIsOpen(false);
-                        const target = document.querySelector(link.href);
+                        const targetId = link.href.replace('#', '');
+                        const target = document.getElementById(targetId);
                         if (target) {
-                          // Small timeout to allow menu close animation before jumping
                           setTimeout(() => {
                             target.scrollIntoView({ behavior: 'smooth' });
-                          }, 100);
+                          }, 300);
                         }
                       }}
                     >

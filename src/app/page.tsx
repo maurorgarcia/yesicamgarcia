@@ -20,21 +20,41 @@ export default function Home() {
         <AboutMe />
         <Services />
         
-    <section className="py-24 bg-white">
+    <section id="coberturas" className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <span className="text-primary text-[10px] uppercase tracking-[0.4em] font-bold mb-6 block">
+          <motion.span 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-primary text-[10px] uppercase tracking-[0.4em] font-bold mb-6 block"
+          >
             Atención por Cobertura Médica
-          </span>
-          <h2 className="text-4xl md:text-6xl font-serif font-bold mb-8">
-            Obras Sociales y prepagas.
-          </h2>
-          <p className="text-muted max-w-2xl mx-auto text-base">
+          </motion.span>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-6xl font-serif font-bold mb-8"
+          >
+            Obras Sociales <span className="italic text-foreground/40 font-light">y prepagas.</span>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-muted max-w-2xl mx-auto text-base"
+          >
             Trabajo con una amplia red de coberturas para facilitar tu acceso a una nutrición de calidad.
-          </p>
+          </motion.p>
         </div>
 
-        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+        >
           {[
             'Apsot', 'Ospsip', 'Dasuten', 'Galeno', 'Medicus', 
             'Medife', 'Ospat', 'Omint', 'Osjera', 'Ospedyc', 
@@ -46,12 +66,12 @@ export default function Home() {
           ].map((obra) => (
             <div 
               key={obra}
-              className="p-4 border border-slate-100 bg-slate-50 text-[10px] uppercase tracking-widest font-bold text-foreground/60 text-center rounded-xl"
+              className="p-4 border border-slate-100 bg-slate-50 text-[10px] uppercase tracking-widest font-bold text-foreground/60 text-center rounded-xl hover:border-primary/20 hover:bg-white hover:text-primary transition-all duration-300"
             >
               {obra}
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
 
