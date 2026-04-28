@@ -10,7 +10,7 @@ import { BookingForm } from './BookingForm';
 import { supabase } from '@/lib/supabase';
 import { formatWhatsAppMessage, getWhatsAppUrl } from '@/lib/utils';
 import { SITE_CONFIG } from '@/lib/constants';
-import { CheckCircle2, Loader2 } from 'lucide-react';
+import { CheckCircle2, Loader2, ChevronLeft } from 'lucide-react';
 
 import { ServiceSelection } from './ServiceSelection';
 
@@ -80,10 +80,7 @@ export const BookingManager = () => {
           full_name: formData.name,
           phone: formData.phone,
           email: formData.email,
-          modality: formData.modality,
-          location: formData.location,
-          service_name: selectedService.name + ' (' + selectedService.description + ')',
-          price: selectedService.price,
+          service_name: `${selectedService.name} (${selectedService.description}) - ${formData.modality} en ${formData.location}`,
           status: 'pendiente',
         },
       ]);
@@ -102,9 +99,9 @@ export const BookingManager = () => {
         window.open(whatsappUrl, '_blank');
       }, 1500);
 
-    } catch (err) {
-      console.error(err);
-      alert('Hubo un error al guardar tu turno. Por favor, intenta de nuevo.');
+    } catch (err: any) {
+      console.error('Detailed Supabase Error:', err);
+      alert(`Error al guardar: ${err.message || 'Error desconocido'}. Por favor, avisale a Yesica por WhatsApp.`);
     } finally {
       setLoading(false);
     }
@@ -139,20 +136,19 @@ export const BookingManager = () => {
 
   return (
     <div className="w-full">
-      {/* Progress Indicator */}
-      <div className="flex items-center justify-center gap-6 mb-16">
-        {[1, 2, 3, 4].map((s) => (
-          <div key={s} className="flex items-center gap-6">
-            <div 
-              className={`text-[10px] font-bold tracking-widest transition-all duration-700 ${
-                step === s ? 'text-primary' : 'text-foreground/20'
-              }`}
-            >
-              0{s}
-            </div>
-            {s < 4 && <div className="w-6 h-[1px] bg-foreground/10" />}
-          </div>
-        ))}
+      {/* Progress Indicator - Minimal & Elegant */}
+      <div className="flex items-center gap-8 mb-12">
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-bold tracking-[0.3em] text-primary">0{step}</span>
+          <div className="w-12 h-[1px] bg-primary/20" />
+          <span className="text-[10px] font-bold tracking-[0.3em] text-slate-300">04</span>
+        </div>
+        <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400">
+          {step === 1 && "Selección de Servicio"}
+          {step === 2 && "Fecha de Cita"}
+          {step === 3 && "Horarios Disponibles"}
+          {step === 4 && "Confirmación"}
+        </p>
       </div>
 
       <AnimatePresence mode="wait">
@@ -170,9 +166,9 @@ export const BookingManager = () => {
             <div className="max-w-4xl mx-auto">
               <button 
                 onClick={handleBackToServices}
-                className="mb-12 text-[10px] uppercase tracking-[0.3em] text-foreground/40 hover:text-primary flex items-center gap-4 transition-all group"
+                className="mb-10 inline-flex items-center gap-3 px-6 py-3 bg-accent/40 rounded-2xl text-[10px] uppercase tracking-[0.2em] font-bold text-foreground hover:bg-primary hover:text-white transition-all duration-500 shadow-sm"
               >
-                <span className="w-8 h-[1px] bg-foreground/10 group-hover:bg-primary transition-colors" />
+                <ChevronLeft size={14} />
                 Cambiar servicio
               </button>
               <Calendar 
@@ -185,9 +181,9 @@ export const BookingManager = () => {
             <div className="max-w-md mx-auto">
               <button 
                 onClick={handleBackToCalendar}
-                className="mb-12 text-[10px] uppercase tracking-[0.3em] text-foreground/40 hover:text-primary flex items-center gap-4 transition-all group"
+                className="mb-10 inline-flex items-center gap-3 px-6 py-3 bg-accent/40 rounded-2xl text-[10px] uppercase tracking-[0.2em] font-bold text-foreground hover:bg-primary hover:text-white transition-all duration-500 shadow-sm"
               >
-                <span className="w-8 h-[1px] bg-foreground/10 group-hover:bg-primary transition-colors" />
+                <ChevronLeft size={14} />
                 Volver al calendario
               </button>
               {loadingSlots ? (
@@ -209,41 +205,19 @@ export const BookingManager = () => {
             <div className="max-w-md mx-auto">
               <button 
                 onClick={handleBackToSlots}
-                className="mb-12 text-[10px] uppercase tracking-[0.3em] text-foreground/40 hover:text-primary flex items-center gap-4 transition-all group"
+                className="mb-10 inline-flex items-center gap-3 px-6 py-3 bg-accent/40 rounded-2xl text-[10px] uppercase tracking-[0.2em] font-bold text-foreground hover:bg-primary hover:text-white transition-all duration-500 shadow-sm"
               >
-                <span className="w-8 h-[1px] bg-foreground/10 group-hover:bg-primary transition-colors" />
+                <ChevronLeft size={14} />
                 Volver a horarios
               </button>
-              
-              <div className="mb-10 p-8 rounded-3xl border border-primary/10 bg-primary/[0.02] flex flex-col gap-6">
-                <div className="flex justify-between items-start">
-                  <div className="space-y-2">
-                    <p className="text-[9px] uppercase tracking-[0.3em] text-primary font-bold">Servicio</p>
-                    <p className="font-serif italic text-xl text-foreground">{selectedService?.name}</p>
-                    <p className="text-[10px] text-muted font-medium">{selectedService?.description}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-2xl font-serif text-primary">{selectedService?.price}</p>
-                    <p className="text-[9px] text-muted uppercase mt-1">{selectedService?.duration}</p>
-                  </div>
-                </div>
-                
-                <div className="h-[1px] bg-primary/10 w-full" />
-                
-                <div className="flex justify-between items-center">
-                  <div className="space-y-2">
-                    <p className="text-[9px] uppercase tracking-[0.3em] text-primary font-bold">Cita</p>
-                    <p className="font-serif text-base text-foreground">
-                      {selectedDate && format(selectedDate, "EEEE d 'de' MMMM", { locale: es })}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-3xl font-serif text-foreground">{selectedTime}</p>
-                  </div>
-                </div>
-              </div>
 
-              <BookingForm onSubmit={handleFormSubmit} isLoading={loading} />
+              <BookingForm 
+                selectedService={selectedService}
+                selectedDate={selectedDate}
+                selectedTime={selectedTime}
+                onSubmit={handleFormSubmit} 
+                isSubmitting={loading} 
+              />
             </div>
           )}
         </motion.div>

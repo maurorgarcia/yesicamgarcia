@@ -43,7 +43,7 @@ export const Calendar = ({ selectedDate, onDateSelect }: CalendarProps) => {
   const renderHeader = () => {
     return (
       <div className="flex items-center justify-between mb-10 px-2">
-        <div className="flex flex-col">
+        <div className="flex flex-col text-left">
           <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-1">Seleccioná una fecha</p>
           <h3 className="text-3xl font-serif font-bold text-foreground capitalize">
             {format(currentMonth, 'MMMM yyyy', { locale: es })}
@@ -53,17 +53,17 @@ export const Calendar = ({ selectedDate, onDateSelect }: CalendarProps) => {
           <button
             onClick={prevMonth}
             disabled={isSameMonth(currentMonth, today)}
-            className="w-12 h-12 flex items-center justify-center hover:bg-primary/5 border border-slate-100 rounded-2xl disabled:opacity-10 transition-all duration-300"
+            className="w-12 h-12 flex items-center justify-center hover:bg-primary hover:text-white border border-slate-200 rounded-2xl disabled:opacity-5 transition-all duration-300"
             aria-label="Mes anterior"
           >
-            <ChevronLeft className="w-5 h-5 text-foreground/60" />
+            <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={nextMonth}
-            className="w-12 h-12 flex items-center justify-center hover:bg-primary/5 border border-slate-100 rounded-2xl transition-all duration-300"
+            className="w-12 h-12 flex items-center justify-center hover:bg-primary hover:text-white border border-slate-200 rounded-2xl transition-all duration-300"
             aria-label="Mes siguiente"
           >
-            <ChevronRight className="w-5 h-5 text-foreground/60" />
+            <ChevronRight className="w-5 h-5" />
           </button>
         </div>
       </div>
@@ -73,9 +73,9 @@ export const Calendar = ({ selectedDate, onDateSelect }: CalendarProps) => {
   const renderDays = () => {
     const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
     return (
-      <div className="grid grid-cols-7 mb-4 border-b border-slate-50 pb-4">
+      <div className="grid grid-cols-7 mb-4 border-b border-slate-100 pb-4">
         {days.map((day) => (
-          <div key={day} className="text-center text-[11px] uppercase tracking-[0.1em] font-bold text-muted/40">
+          <div key={day} className="text-center text-[11px] uppercase tracking-[0.1em] font-bold text-slate-500">
             {day}
           </div>
         ))}
@@ -106,32 +106,33 @@ export const Calendar = ({ selectedDate, onDateSelect }: CalendarProps) => {
             disabled={isDisabled}
             onClick={() => onDateSelect(cloneDay)}
             className={`
-              relative h-16 md:h-20 w-full flex flex-col items-center justify-center transition-all duration-300 group
-              ${isDisabled ? 'opacity-10 cursor-not-allowed' : 'hover:z-10'}
+              relative h-14 md:h-16 w-full flex flex-col items-center justify-center transition-all duration-500 group
+              ${isDisabled ? 'opacity-[0.15] cursor-not-allowed' : 'hover:z-10'}
             `}
           >
             {/* Selection Background */}
             {isSelected && (
               <motion.div 
                 layoutId="calendarSelect"
-                className="absolute inset-2 bg-primary rounded-2xl shadow-lg shadow-primary/20 z-0"
+                className="absolute inset-1.5 bg-primary rounded-2xl shadow-lg shadow-primary/20 z-0"
+                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
               />
             )}
             
             {/* Today indicator circle */}
             {isToday && !isSelected && (
-              <div className="absolute inset-2 border-2 border-primary/20 rounded-2xl z-0" />
+              <div className="absolute inset-1.5 border-2 border-primary/20 rounded-2xl z-0" />
             )}
 
             {/* Hover Background */}
             {!isDisabled && !isSelected && (
-              <div className="absolute inset-2 bg-primary/5 rounded-2xl z-0 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100" />
+              <div className="absolute inset-1.5 bg-primary/5 rounded-2xl z-0 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-90 group-hover:scale-100" />
             )}
 
             <span className={`
-              relative z-10 text-base md:text-lg font-medium transition-colors duration-300
-              ${isSelected ? 'text-white' : 'text-foreground/70 group-hover:text-primary'}
-              ${isToday && !isSelected ? 'text-primary font-bold' : ''}
+              relative z-10 text-sm md:text-base font-bold transition-colors duration-300
+              ${isSelected ? 'text-white' : 'text-slate-800 group-hover:text-primary'}
+              ${isToday && !isSelected ? 'text-primary' : ''}
             `}>
               {format(day, 'd')}
             </span>

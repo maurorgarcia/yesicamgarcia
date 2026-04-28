@@ -24,78 +24,76 @@ const BookingManager = dynamic(
 export default function ReservarPage() {
   return (
     <>
-      <Navbar />
-      <main className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
+      <main className="min-h-screen bg-[#FDFCFB] relative overflow-hidden flex flex-col md:flex-row items-stretch">
         {/* Luz de fondo sutil */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent pointer-events-none" />
 
-        <div className="container mx-auto px-6 relative z-10">
-          {/* Encabezado Personal */}
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <Link 
-              href="/" 
-              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-bold text-muted hover:text-primary transition-all duration-500 mb-10 group"
-            >
-              <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
-              Volver al inicio
-            </Link>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-            >
-              <h1 className="text-4xl md:text-6xl font-serif font-bold leading-tight text-foreground mb-6">
-                Mi agenda <span className="text-primary italic font-light">de turnos</span>
-              </h1>
-              <p className="text-base md:text-lg text-muted font-sans font-light max-w-xl mx-auto leading-relaxed">
-                Elegí el servicio y el horario que mejor te quede. <br className="hidden md:block" />
-                Trabajemos juntos para lograr tus objetivos.
-              </p>
-            </motion.div>
+        {/* Header Móvil (Solo visible en Celu) */}
+        <div className="md:hidden w-full bg-white/80 backdrop-blur-md p-5 flex items-center justify-between border-b border-slate-100 sticky top-0 z-50">
+          <Link href="/" className="text-slate-400 hover:text-primary transition-colors">
+            <ChevronLeft size={20} />
+          </Link>
+          <div className="text-center">
+            <p className="text-[9px] uppercase tracking-[0.2em] font-bold text-slate-900 leading-tight">Lic. Yesica M. García</p>
+            <p className="text-[7px] uppercase tracking-[0.2em] text-primary font-bold">Reserva de Turnos</p>
           </div>
+          <div className="w-5" /> {/* Espaciador para centrar el texto */}
+        </div>
 
-          {/* Contenedor de Reserva */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
-            className="max-w-4xl mx-auto bg-white border border-slate-50 rounded-[3rem] shadow-2xl shadow-primary/5 p-8 md:p-14 lg:p-20 relative"
-          >
-            <BookingManager />
-
-            {/* Información de confianza sutil */}
-            <div className="mt-12 pt-10 border-t border-slate-50">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                <div className="flex flex-col items-center text-center px-4">
-                  <MapPin size={16} className="text-primary/40 mb-3" />
-                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground mb-1">San Nicolás</p>
-                  <p className="text-[9px] text-muted leading-tight">Centro CEMIR · Gimnasio XTREME</p>
+        <div className="w-full flex flex-col md:flex-row items-stretch relative z-10">
+          {/* Columna Izquierda: Branding (Solo Desktop) */}
+          <div className="hidden md:flex w-[380px] lg:w-[450px] bg-white p-12 lg:p-20 flex-col justify-between border-r border-slate-100 shadow-2xl shadow-slate-200/50">
+            <div>
+              <Link 
+                href="/" 
+                className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.4em] font-bold text-slate-400 hover:text-primary transition-all duration-500 mb-20 group"
+              >
+                <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+                Volver al inicio
+              </Link>
+              
+              <div className="space-y-4 mb-24">
+                <div className="inline-block px-3 py-1 bg-primary/5 rounded-full text-[9px] uppercase tracking-[0.3em] text-primary font-bold">
+                  Sistema de Reservas
                 </div>
-                
-                <div className="flex flex-col items-center text-center px-4">
-                  <Globe size={16} className="text-primary/40 mb-3" />
-                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground mb-1">Consulta Online</p>
-                  <p className="text-[9px] text-muted leading-tight">Atención remota personalizada</p>
-                </div>
-
-                <div className="flex flex-col items-center text-center px-4">
-                  <ShieldCheck size={16} className="text-primary/40 mb-3" />
-                  <p className="text-[9px] uppercase tracking-widest font-bold text-foreground mb-1">Privacidad</p>
-                  <p className="text-[9px] text-muted leading-tight">Datos médicos protegidos</p>
-                </div>
+                <h1 className="text-5xl lg:text-6xl font-serif font-bold leading-[1.1] text-slate-900">
+                  Mi agenda <br />
+                  <span className="text-primary italic font-light">de turnos</span>
+                </h1>
               </div>
             </div>
-          </motion.div>
-          
-          <div className="mt-12 text-center">
-            <p className="text-[10px] uppercase tracking-[0.3em] text-muted font-medium">
-              Lic. Yesica M. García · Nutricionista · MP 7250
-            </p>
+
+            <div className="space-y-8">
+              <div className="grid grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <MapPin size={16} className="text-primary/40" />
+                  <p className="text-[9px] uppercase tracking-widest font-bold text-slate-900">Ubicación</p>
+                  <p className="text-[10px] text-slate-400 leading-tight">San Nicolás, Bs. As.</p>
+                </div>
+                <div className="space-y-2">
+                  <Globe size={16} className="text-primary/40" />
+                  <p className="text-[9px] uppercase tracking-widest font-bold text-slate-900">Modalidad</p>
+                  <p className="text-[10px] text-slate-400 leading-tight">Presencial & Online</p>
+                </div>
+              </div>
+              
+              <div className="pt-8 border-t border-slate-50">
+                <p className="text-[11px] font-serif italic text-slate-400">
+                  Lic. Yesica M. García <br />
+                  <span className="text-primary font-sans not-italic font-bold tracking-widest text-[8px] uppercase mt-1 block">Nutricionista · MP 7250</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Columna Derecha: Contenido dinámico */}
+          <div className="flex-1 bg-transparent flex flex-col justify-center overflow-y-auto p-4 md:p-12 lg:p-20">
+            <div className="max-w-2xl w-full mx-auto">
+              <BookingManager />
+            </div>
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

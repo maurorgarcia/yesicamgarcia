@@ -17,58 +17,56 @@ export const TimeSlots = ({ selectedTime, onTimeSelect, bookedSlots = [], select
 
   return (
     <div className="w-full">
-      <h3 className="text-3xl font-serif text-center mb-12 italic text-foreground/40">Horarios disponibles</h3>
-      {availableSlots.length === 0 ? (
-        <div className="text-center py-12 border border-dashed border-foreground/10">
-          <p className="text-sm text-foreground/40 italic">No hay turnos disponibles para este día.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-3 gap-4" role="listbox" aria-label="Seleccionar horario">
-          {availableSlots.map((time, index) => {
-          const isBooked = bookedSlots.includes(time) || bookedSlots.includes(`${time}:00`);
-          const isSelected = selectedTime === time;
-
-          return (
-            <motion.button
-              key={time}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.03 }}
-              disabled={isBooked}
-              onClick={() => onTimeSelect(time)}
-              role="option"
-              aria-selected={isSelected}
-              className={`
-                py-4 px-6 border text-sm font-sans transition-all duration-500 relative group overflow-hidden
-                ${isSelected 
-                  ? 'border-primary text-primary font-bold' 
-                  : isBooked
-                    ? 'border-foreground/5 text-foreground/10 cursor-not-allowed line-through'
-                    : 'border-foreground/5 text-foreground/40 hover:border-primary/40 hover:text-primary'
-                }
-              `}
-            >
-              <span className="relative z-10">{time}</span>
-              {isSelected && (
-                <motion.div 
-                  layoutId="activeSlot"
-                  className="absolute inset-0 bg-primary/5 z-0"
-                />
-              )}
-              {!isBooked && !isSelected && (
-                <div className="absolute inset-0 bg-foreground/5 z-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-              )}
-            </motion.button>
-          );
-        })}
+      <div className="text-left mb-10 px-2">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-1">Paso 03</p>
+        <h3 className="text-3xl font-serif font-bold text-foreground capitalize">
+          Horarios disponibles
+        </h3>
       </div>
-      )}
-      <div className="mt-12 flex items-center justify-center gap-4">
-        <div className="w-8 h-[1px] bg-foreground/10" />
-        <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 font-medium">
-          Sesión de 45-60 min aprox.
-        </p>
-        <div className="w-8 h-[1px] bg-foreground/10" />
+
+      <div className="bg-white rounded-[2.5rem] p-4 md:p-8 border border-slate-50 shadow-sm">
+        {availableSlots.length === 0 ? (
+          <div className="text-center py-12 border border-dashed border-foreground/10 rounded-3xl">
+            <p className="text-sm text-foreground/40 italic">No hay turnos disponibles para este día.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {availableSlots.map((time, index) => {
+            const isBooked = bookedSlots.includes(time) || bookedSlots.includes(`${time}:00`);
+            const isSelected = selectedTime === time;
+
+            return (
+              <motion.button
+                key={time}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.03 }}
+                disabled={isBooked}
+                onClick={() => onTimeSelect(time)}
+                className={`
+                  relative py-4 px-6 rounded-2xl text-sm font-bold transition-all duration-500 group overflow-hidden border
+                  ${isSelected 
+                    ? 'border-primary bg-primary text-white shadow-lg shadow-primary/20' 
+                    : isBooked
+                      ? 'border-slate-50 bg-slate-50 text-slate-200 cursor-not-allowed line-through'
+                      : 'border-slate-100 bg-accent/20 text-slate-800 hover:border-primary/40 hover:bg-white hover:shadow-md'
+                  }
+                `}
+              >
+                <span className="relative z-10">{time}</span>
+              </motion.button>
+            );
+          })}
+        </div>
+        )}
+
+        <div className="mt-12 pt-8 border-t border-slate-50 flex items-center justify-center gap-4 opacity-50">
+          <div className="w-8 h-[1px] bg-primary/20" />
+          <p className="text-[9px] uppercase tracking-widest font-bold text-foreground flex items-center gap-2">
+            Sesión de 45-60 min aprox.
+          </p>
+          <div className="w-8 h-[1px] bg-primary/20" />
+        </div>
       </div>
     </div>
   );
