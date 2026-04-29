@@ -53,12 +53,12 @@ export const Footer = () => {
         <div className="grid md:grid-cols-4 gap-16 mb-24">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="group flex items-center gap-4 mb-10">
-              <div className="relative w-16 h-16 overflow-hidden bg-white rounded-2xl p-2 shadow-2xl">
+              <div className="relative w-24 h-24 overflow-hidden group-hover:scale-105 transition-all duration-500">
                 <Image 
                   src="/logo.png" 
                   alt={SITE_CONFIG.name} 
                   fill
-                  sizes="64px"
+                  sizes="96px"
                   className="object-contain" 
                 />
               </div>
@@ -147,10 +147,10 @@ export const Footer = () => {
               href="https://godreamai.com/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-3 opacity-30 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 group"
+              className="flex items-center gap-3 opacity-70 hover:opacity-100 transition-all duration-500 group"
             >
-              <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-white">Developed by</span>
-              <div className="relative w-8 h-8 group-hover:scale-110 transition-transform duration-500">
+              <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/60">Developed by</span>
+              <div className="relative w-10 h-10 group-hover:scale-110 transition-transform duration-500">
                 <Image 
                   src="/logoMrgDeve.png" 
                   alt="MrgDeve Logo" 

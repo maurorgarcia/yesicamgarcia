@@ -79,13 +79,13 @@ export const Navbar = () => {
           {/* Brand */}
           <Link href="/" onClick={scrollToTop} className="group flex items-center gap-3">
             <div className={`relative overflow-hidden transition-all duration-500 ${
-              scrolled ? 'w-9 h-9' : 'w-11 h-11'
-            } bg-white rounded-xl p-1.5 shadow-sm border border-slate-100`}>
+              scrolled ? 'w-12 h-12' : 'w-16 h-16'
+            }`}>
               <Image
                 src="/logo.png"
                 alt={SITE_CONFIG.name}
                 fill
-                sizes="44px"
+                sizes="64px"
                 className="object-contain group-hover:scale-105 transition-transform duration-500"
               />
             </div>

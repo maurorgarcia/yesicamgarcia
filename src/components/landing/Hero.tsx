@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-[85vh] flex items-center pt-32 pb-20 bg-background overflow-hidden">
+    <section className="relative min-h-[70vh] flex items-center pt-32 pb-16 bg-background overflow-hidden">
       {/* User Palette Pattern */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 overflow-hidden">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -24,8 +24,8 @@ export const Hero = () => {
       <div className="absolute top-[-10%] right-[-5%] w-[45vw] h-[45vw] bg-primary/5 rounded-full pointer-events-none z-0" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
-          <div className="w-full lg:w-[55%] text-center lg:text-left">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          <div className="w-full lg:w-[62%] text-center lg:text-left">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -51,12 +51,12 @@ export const Hero = () => {
                 Lic. Yesica M. García · MP 7250
               </div>
               
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold mb-8 text-foreground leading-[1.1]">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 text-foreground leading-[1.1]">
                 Tu nutricionista <br />
                 <span className="text-primary">de cabecera</span>
               </h1>
 
-              <p className="text-base md:text-lg leading-relaxed text-muted max-w-xl mb-12 font-sans font-light mx-auto lg:mx-0">
+              <p className="text-base leading-relaxed text-muted max-w-xl mb-10 font-sans font-light mx-auto lg:mx-0">
                 Diseño planes nutricionales adaptados a <em>tu</em> vida, con el rigor técnico de una especialista en nutrición clínica y deportiva. Presencial en San Nicolás · Online para todo el país.
               </p>
 
@@ -77,7 +77,7 @@ export const Hero = () => {
               </div>
 
               {/* Refined Trust Indicators */}
-              <div className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 pt-10 border-t border-slate-100">
+              <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 pt-10 border-t border-slate-100">
                 <div className="text-center lg:text-left">
                   <div className="text-xl md:text-2xl font-bold text-secondary">MP 7250</div>
                   <div className="text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-muted font-bold mt-2 opacity-50">Matrícula Profesional</div>
@@ -98,31 +98,31 @@ export const Hero = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="hidden lg:block w-[45%]"
+            className="hidden lg:block w-[38%]"
           >
             <div className="relative">
-              <div className="absolute -inset-10 bg-gradient-to-tr from-secondary/5 to-primary/5 rounded-full blur-[100px] opacity-40" />
+              <div className="absolute -inset-6 bg-gradient-to-tr from-secondary/5 to-primary/5 rounded-full blur-[80px] opacity-40" />
               
-              <div className="relative aspect-[4/5] rounded-[3.5rem] bg-white border border-slate-100 shadow-2xl overflow-hidden group">
+              <div className="relative aspect-[5/6] rounded-[3rem] bg-white border border-slate-100 shadow-2xl overflow-hidden group">
                 <Image 
                   src="/fotoNutri.png" 
                   alt="Lic. Yesica M. García" 
                   fill
                   priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 768px) 100vw, 40vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-[4s] ease-out" 
                 />
                 
-                <div className="absolute bottom-6 left-6 right-6 p-6 bg-white/95 backdrop-blur-sm shadow-xl rounded-[2rem] border border-white/50 z-20">
-                  <div className="flex items-center gap-5">
-                    <div className="w-12 h-12 rounded-xl bg-secondary text-white flex items-center justify-center shrink-0">
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="absolute bottom-4 left-4 right-4 p-5 bg-white/95 backdrop-blur-sm shadow-xl rounded-[1.5rem] border border-white/50 z-20">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-secondary text-white flex items-center justify-center shrink-0">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-base font-bold text-foreground leading-tight">Yesica M. García</p>
-                      <p className="text-[10px] text-secondary font-semibold mt-1 uppercase tracking-[0.1em]">Nutricionista · San Nicolás</p>
+                      <p className="text-sm font-bold text-foreground leading-tight">Yesica M. García</p>
+                      <p className="text-[9px] text-secondary font-semibold mt-1 uppercase tracking-[0.1em]">Nutricionista</p>
                     </div>
                   </div>
                 </div>
