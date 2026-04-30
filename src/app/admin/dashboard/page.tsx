@@ -237,7 +237,9 @@ export default function DashboardPage() {
       projected: totalProjected.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }),
       revenueGrowth,
       efficiency: Math.round(confirmedRatio * 100),
-      isGrowing: revenueGrowth >= 0
+      isGrowing: revenueGrowth >= 0,
+      revenueThisMonth: revenueThisMonth.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }),
+      paidThisMonth: paidThisMonth.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })
     };
   }, [appointments, services]);
 
@@ -880,10 +882,10 @@ export default function DashboardPage() {
                           <tr className="bg-primary/5 font-bold border-t border-primary/20">
                             <td className="py-6 px-6 text-primary uppercase tracking-[0.2em] text-[10px]">Totales Reales</td>
                             <td className="text-center text-primary text-base">
-                              {Object.values(selectedPatient.nutritional_math?.exchanges || {}).reduce((acc, v) => acc + Number(v), 0)}
+                              {Object.values((selectedPatient.nutritional_math?.exchanges as Record<string, any>) || {}).reduce((acc: number, v: any) => acc + Number(v), 0)}
                             </td>
                             <td className="text-right text-primary text-xl font-serif">
-                              {Object.entries(selectedPatient.nutritional_math?.exchanges || {}).reduce((acc, [name, v]) => {
+                              {Object.entries((selectedPatient.nutritional_math?.exchanges as Record<string, any>) || {}).reduce((acc: number, [name, v]: [string, any]) => {
                                 const group = [
                                   { name: 'Almidones', kcal: 70 }, { name: 'Legumbres', kcal: 90 }, { name: 'Frutas', kcal: 60 },
                                   { name: 'Verduras', kcal: 25 }, { name: 'Lácteos (Desc)', kcal: 80 }, { name: 'Proteínas (BG)', kcal: 55 },
@@ -896,8 +898,8 @@ export default function DashboardPage() {
                                <div className="flex flex-col items-end gap-1">
                                   <div className="text-[10px] text-primary/60 uppercase tracking-[0.2em]">Macronutrientes</div>
                                   <div className="text-sm text-slate-800 font-bold">
-                                    {Object.entries(selectedPatient.nutritional_math?.exchanges || {}).reduce((acc, [name, v]) => acc + (Number(v) * ([{ name: 'Almidones', hc: 15 }, { name: 'Legumbres', hc: 15 }, { name: 'Frutas', hc: 15 }, { name: 'Verduras', hc: 5 }, { name: 'Lácteos (Desc)', hc: 12 }].find(g => g.name === name)?.hc || 0)), 0)}g HC / 
-                                    {Object.entries(selectedPatient.nutritional_math?.exchanges || {}).reduce((acc, [name, v]) => acc + (Number(v) * ([{ name: 'Almidones', pr: 2 }, { name: 'Legumbres', pr: 7 }, { name: 'Verduras', pr: 2 }, { name: 'Lácteos (Desc)', pr: 8 }, { name: 'Proteínas (BG)', pr: 7 }, { name: 'Proteínas (MG)', pr: 7 }].find(g => g.name === name)?.pr || 0)), 0)}g PR
+                                    {Object.entries((selectedPatient.nutritional_math?.exchanges as Record<string, any>) || {}).reduce((acc: number, [name, v]: [string, any]) => acc + (Number(v) * ([{ name: 'Almidones', hc: 15 }, { name: 'Legumbres', hc: 15 }, { name: 'Frutas', hc: 15 }, { name: 'Verduras', hc: 5 }, { name: 'Lácteos (Desc)', hc: 12 }].find(g => g.name === name)?.hc || 0)), 0)}g HC / 
+                                    {Object.entries((selectedPatient.nutritional_math?.exchanges as Record<string, any>) || {}).reduce((acc: number, [name, v]: [string, any]) => acc + (Number(v) * ([{ name: 'Almidones', pr: 2 }, { name: 'Legumbres', pr: 7 }, { name: 'Verduras', pr: 2 }, { name: 'Lácteos (Desc)', pr: 8 }, { name: 'Proteínas (BG)', pr: 7 }, { name: 'Proteínas (MG)', pr: 7 }].find(g => g.name === name)?.pr || 0)), 0)}g PR
                                   </div>
                                </div>
                             </td>
