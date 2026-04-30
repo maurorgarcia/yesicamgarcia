@@ -48,6 +48,16 @@ export const Hero = () => {
                 </div>
               </div>
 
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="w-20 h-20 mb-8 mx-auto lg:mx-0 p-3 bg-white rounded-2xl shadow-xl border border-slate-50 flex items-center justify-center relative group overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
+                <Image src="/logo.png" alt="Logo" width={60} height={60} priority className="object-contain relative z-10" />
+              </motion.div>
+
               <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-secondary/5 text-secondary text-[9px] font-bold uppercase tracking-[0.25em] mb-8 border border-secondary/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
                 Lic. Yesica M. García · MP 7250

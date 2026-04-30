@@ -3,9 +3,9 @@ export default function JsonLd() {
     "@context": "https://schema.org",
     "@type": "MedicalBusiness",
     "name": "Lic. Yesica M. García | Nutrición Clínica & Deportiva",
-    "image": "https://licyesicamgarcia.com/fotoNutri.png",
-    "@id": "https://licyesicamgarcia.com",
-    "url": "https://licyesicamgarcia.com",
+    "image": "https://licyesicamgarcia.vercel.app/fotoNutri.png",
+    "@id": "https://licyesicamgarcia.vercel.app",
+    "url": "https://licyesicamgarcia.vercel.app",
     "telephone": "",
     "address": {
       "@type": "PostalAddress",
