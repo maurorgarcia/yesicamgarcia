@@ -11,11 +11,15 @@ export interface Appointment {
   modality: string;
   location: string;
   status: AppointmentStatus;
+  is_paid: boolean;
+  payment_method?: string;
 }
 
 export interface Service {
   id: string;
-  title: string;
+  name: string;
   description: string;
-  price?: string;
+  price: number;
+  duration: string;
+  icon_name?: string;
 }
