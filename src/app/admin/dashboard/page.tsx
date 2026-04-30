@@ -41,7 +41,21 @@ import {
   Upload,
   ChevronLeft,
   Trash2,
-  ImageIcon
+  ImageIcon,
+  Carrot,
+  Salad,
+  Utensils,
+  Scale,
+  Activity,
+  Dumbbell,
+  Droplets,
+  HeartPulse,
+  Stethoscope,
+  ClipboardList,
+  Leaf,
+  Flame,
+  Baby,
+  Info
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
@@ -400,7 +414,8 @@ export default function DashboardPage() {
         id: editingService.id || undefined,
         name: editingService.name,
         price: Number(editingService.price),
-        duration: editingService.duration
+        duration: editingService.duration,
+        icon_name: editingService.icon_name || 'Apple'
       });
 
     if (error) {
@@ -476,6 +491,24 @@ export default function DashboardPage() {
     setIsPatientModalOpen(true);
     setLoading(false);
   };
+
+  const availableIcons = [
+    { name: 'Apple', icon: Apple },
+    { name: 'Carrot', icon: Carrot },
+    { name: 'Salad', icon: Salad },
+    { name: 'Utensils', icon: Utensils },
+    { name: 'Leaf', icon: Leaf },
+    { name: 'Scale', icon: Scale },
+    { name: 'Ruler', icon: Ruler },
+    { name: 'Dumbbell', icon: Dumbbell },
+    { name: 'Activity', icon: Activity },
+    { name: 'Flame', icon: Flame },
+    { name: 'Droplets', icon: Droplets },
+    { name: 'HeartPulse', icon: HeartPulse },
+    { name: 'Stethoscope', icon: Stethoscope },
+    { name: 'ClipboardList', icon: ClipboardList },
+    { name: 'Baby', icon: Baby },
+  ];
 
   const savePatientFile = async () => {
     setLoading(true);
@@ -1729,7 +1762,7 @@ export default function DashboardPage() {
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-serif font-medium text-slate-800">Servicios Activos</h3>
             <Button 
-              onClick={() => setEditingService({ name: '', price: '', duration: '' })}
+              onClick={() => setEditingService({ name: '', price: '', duration: '', icon_name: 'Apple' })}
               className="bg-primary text-white hover:bg-primary/90 rounded-xl px-5 py-4 text-[10px] uppercase tracking-widest font-bold shadow-md shadow-primary/20 flex items-center gap-2"
             >
               <Plus size={14} /> Añadir
@@ -1741,7 +1774,10 @@ export default function DashboardPage() {
               <div key={service.id} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
                 <div className="flex justify-between items-start mb-6">
                   <div className="p-3 bg-slate-50 rounded-2xl group-hover:bg-primary/10 transition-colors">
-                    <Apple size={20} className="text-primary" />
+                    {(() => {
+                      const IconObj = availableIcons.find(i => i.name === service.icon_name)?.icon || Apple;
+                      return <IconObj size={20} className="text-primary" />;
+                    })()}
                   </div>
                   <div className="flex gap-1">
                     <button 
@@ -1951,6 +1987,26 @@ export default function DashboardPage() {
                     placeholder="60 min"
                     required
                   />
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <label className="text-[10px] uppercase tracking-widest font-bold text-slate-400 ml-1">Seleccionar Icono</label>
+                <div className="grid grid-cols-5 gap-2">
+                  {availableIcons.map((item) => (
+                    <button
+                      key={item.name}
+                      type="button"
+                      onClick={() => setEditingService({...editingService, icon_name: item.name})}
+                      className={`p-3 rounded-xl border transition-all flex items-center justify-center ${
+                        editingService.icon_name === item.name 
+                          ? 'bg-primary/10 border-primary text-primary shadow-sm' 
+                          : 'bg-slate-50 border-slate-100 text-slate-400 hover:border-slate-200'
+                      }`}
+                    >
+                      <item.icon size={18} />
+                    </button>
+                  ))}
                 </div>
               </div>
               <div className="flex gap-4 pt-4">

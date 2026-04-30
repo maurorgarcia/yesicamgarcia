@@ -22,12 +22,20 @@ import { motion } from 'framer-motion';
 interface CalendarProps {
   selectedDate: Date | null;
   onDateSelect: (date: Date) => void;
+  availability?: any[];
 }
 
-export const Calendar = ({ selectedDate, onDateSelect }: CalendarProps) => {
+export const Calendar = ({ selectedDate, onDateSelect, availability = [] }: CalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date(2024, 0, 1)); // Stable initial date
   const [today, setToday] = useState<Date>(new Date(2024, 0, 1)); // Stable initial date
   const [mounted, setMounted] = useState(false);
+
+  const isDayDisabled = (date: Date) => {
+    const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const dayName = dayNames[date.getDay()];
+    const dayConfig = availability.find(d => d.day === dayName);
+    return dayConfig ? !dayConfig.isActive : false;
+  };
 
   useEffect(() => {
     setCurrentMonth(new Date());
@@ -96,7 +104,7 @@ export const Calendar = ({ selectedDate, onDateSelect }: CalendarProps) => {
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         const cloneDay = day;
-        const isDisabled = !isSameMonth(day, monthStart) || isBefore(day, today);
+        const isDisabled = !isSameMonth(day, monthStart) || isBefore(day, today) || isDayDisabled(day);
         const isSelected = selectedDate && isSameDay(day, selectedDate);
         const isToday = isSameDay(day, today);
 

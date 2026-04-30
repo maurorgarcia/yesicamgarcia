@@ -23,6 +23,19 @@ export const BookingManager = () => {
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [availability, setAvailability] = useState<any[]>([]);
+
+  const fetchAvailability = useCallback(async () => {
+    const { data, error } = await supabase
+      .from('settings')
+      .select('value')
+      .eq('key', 'availability')
+      .single();
+    
+    if (!error && data) {
+      setAvailability(data.value);
+    }
+  }, []);
 
   const fetchBookedSlots = useCallback(async (date: Date) => {
     setLoadingSlots(true);
@@ -41,6 +54,10 @@ export const BookingManager = () => {
       setLoadingSlots(false);
     }
   }, []);
+
+  useEffect(() => {
+    fetchAvailability();
+  }, [fetchAvailability]);
 
   useEffect(() => {
     if (selectedDate) {
@@ -173,6 +190,7 @@ export const BookingManager = () => {
               <Calendar 
                 selectedDate={selectedDate} 
                 onDateSelect={handleDateSelect} 
+                availability={availability}
               />
             </div>
           )}
@@ -196,6 +214,7 @@ export const BookingManager = () => {
                   onTimeSelect={handleTimeSelect}
                   bookedSlots={bookedSlots}
                   selectedDate={selectedDate}
+                  availability={availability}
                 />
               )}
             </div>

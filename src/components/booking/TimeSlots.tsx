@@ -9,11 +9,35 @@ interface TimeSlotsProps {
   onTimeSelect: (time: string) => void;
   bookedSlots?: string[];
   selectedDate: Date | null;
+  availability?: any[];
 }
 
-export const TimeSlots = ({ selectedTime, onTimeSelect, bookedSlots = [], selectedDate }: TimeSlotsProps) => {
+export const TimeSlots = ({ selectedTime, onTimeSelect, bookedSlots = [], selectedDate, availability = [] }: TimeSlotsProps) => {
   const dayOfWeek = selectedDate ? getDay(selectedDate) : 0;
-  const rawSlots = SCHEDULES[dayOfWeek] || [];
+  
+  const getRawSlots = () => {
+    const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const dayName = dayNames[dayOfWeek];
+    const dayConfig = availability.find(d => d.day === dayName);
+
+    if (!dayConfig || !dayConfig.isActive) return [];
+
+    const slots = [];
+    let current = dayConfig.startTime; // e.g., "09:00"
+    const end = dayConfig.endTime;     // e.g., "18:00"
+
+    while (current < end) {
+      slots.push(current);
+      // Increment 30 minutes
+      const [h, m] = current.split(':').map(Number);
+      const nextM = m + 30;
+      const nextH = h + Math.floor(nextM / 60);
+      current = `${String(nextH).padStart(2, '0')}:${String(nextM % 60).padStart(2, '0')}`;
+    }
+    return slots;
+  };
+
+  const rawSlots = getRawSlots();
 
   // Filtrar horarios que ya pasaron si es el día de hoy
   const filteredSlots = rawSlots.filter(time => {

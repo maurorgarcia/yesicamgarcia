@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Banknote, ChevronRight, UserPlus, RefreshCcw, Ruler, PlusCircle, History, Info, Loader2 } from 'lucide-react';
+import { Clock, Banknote, ChevronRight, Loader2, Info, Apple, Carrot, Salad, Utensils, Scale, Ruler, Activity, Dumbbell, Droplets, HeartPulse, Stethoscope, ClipboardList, Leaf, Flame, Baby } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 interface Service {
@@ -11,17 +11,28 @@ interface Service {
   price: number;
   duration: string;
   description: string;
+  icon_name?: string;
   icon?: any;
 }
 
-const getIcon = (id: string) => {
-  switch(id) {
-    case 'primera-vez': return UserPlus;
-    case 'control': return RefreshCcw;
-    case 'antropometria': return Ruler;
-    case 'completa-primera': return PlusCircle;
-    case 'completa-control': return History;
-    default: return Info;
+const getIcon = (iconName: string) => {
+  switch(iconName) {
+    case 'Apple': return Apple;
+    case 'Carrot': return Carrot;
+    case 'Salad': return Salad;
+    case 'Utensils': return Utensils;
+    case 'Leaf': return Leaf;
+    case 'Scale': return Scale;
+    case 'Ruler': return Ruler;
+    case 'Dumbbell': return Dumbbell;
+    case 'Activity': return Activity;
+    case 'Flame': return Flame;
+    case 'Droplets': return Droplets;
+    case 'HeartPulse': return HeartPulse;
+    case 'Stethoscope': return Stethoscope;
+    case 'ClipboardList': return ClipboardList;
+    case 'Baby': return Baby;
+    default: return Apple;
   }
 };
 
@@ -41,7 +52,7 @@ export const ServiceSelection = ({ onSelect }: ServiceSelectionProps) => {
         .order('price', { ascending: true });
       
       if (!error && data) {
-        setServices(data.map(s => ({ ...s, icon: getIcon(s.id) })));
+        setServices(data.map(s => ({ ...s, icon: getIcon(s.icon_name || 'Apple') })));
       }
       setLoading(false);
     };
