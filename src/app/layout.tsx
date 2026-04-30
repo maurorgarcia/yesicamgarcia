@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   category: 'health',
   classification: 'Medical Nutrition',
   openGraph: {
-    title: "Lic. Yesica M. García | Nutrición Clínica & Deportiva",
+    title: "Lic. Yesica M. García | Nutricionista",
     description: "Planes nutricionales 100% personalizados basados en evidencia científica. Especialista en nutrición clínica, deportiva y antropometría ISAK II.",
-    url: "https://licyesicamgarcia.com",
+    url: "https://licyesicamgarcia.vercel.app",
     siteName: "Lic. Yesica M. García - Nutricionista",
     images: [
       {
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lic. Yesica M. García | Nutrición Clínica & Deportiva",
+    title: "Lic. Yesica M. García | Nutricionista",
     description: "Nutrición basada en ciencia para deportistas y pacientes clínicos.",
     images: ["/fotoNutri.png"],
     creator: "@licyesicamgarcia",
