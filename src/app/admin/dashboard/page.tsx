@@ -55,7 +55,10 @@ import {
   Leaf,
   Flame,
   Baby,
-  Info
+  Info,
+  Coffee,
+  Moon,
+  Sparkles
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
