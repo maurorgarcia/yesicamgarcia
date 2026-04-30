@@ -137,28 +137,24 @@ export const Footer = () => {
           <p className="text-[11px] uppercase tracking-[0.3em] text-white/30 font-bold">
             © {new Date().getFullYear()} Lic. Yesica M. García — Nutrición de Precisión
           </p>
-          <div className="flex flex-col md:flex-row items-center gap-10">
-            <div className="flex gap-12 text-[11px] uppercase tracking-[0.3em] text-white/30 font-bold">
-              <Link href="#" className="hover:text-accent transition-colors">Legales</Link>
-              <Link href="#" className="hover:text-accent transition-colors">Privacidad</Link>
-            </div>
-            <div className="h-4 w-[1px] bg-white/10 hidden md:block" />
-            <a 
-              href="https://godreamai.com/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 opacity-70 hover:opacity-100 transition-all duration-500 group"
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
+            <Link 
+              href="/admin/login" 
+              className="text-[9px] uppercase tracking-[0.3em] text-white/10 hover:text-accent font-bold transition-colors duration-500"
             >
-              <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/60">Developed by</span>
-              <div className="relative w-10 h-10 group-hover:scale-110 transition-transform duration-500">
-                <Image 
-                  src="/logoMrgDeve.png" 
-                  alt="MrgDeve Logo" 
-                  fill
-                  className="object-contain"
-                />
+              Acceso Profesional
+            </Link>
+            <div className="h-4 w-[1px] bg-white/10 hidden md:block" />
+            {/* Developer Branding - Exact Match to Screenshot */}
+            <div className="flex flex-col gap-1 items-end md:items-start group cursor-default">
+              <div className="flex justify-end w-full md:w-auto">
+                <span className="font-mono text-[9px] text-white/70 font-bold tracking-tighter transition-all group-hover:text-white">&lt;mrgdev/&gt;</span>
               </div>
-            </a>
+              <div className="flex items-center gap-3">
+                <div className="w-[1px] h-4 bg-white/10 group-hover:bg-primary/40 transition-colors" />
+                <span className="text-[11px] uppercase tracking-[0.3em] font-bold text-white/20 group-hover:text-white/40 transition-colors">Developed by</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

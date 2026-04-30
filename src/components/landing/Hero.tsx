@@ -40,6 +40,8 @@ export const Hero = () => {
                       src="/fotoNutri.png" 
                       alt="Lic. Yesica M. García" 
                       fill
+                      priority
+                      sizes="(max-width: 1024px) 160px, 1px"
                       className="object-cover"
                     />
                   </div>

@@ -1,65 +1,63 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Banknote, ChevronRight, UserPlus, RefreshCcw, Ruler, PlusCircle, History, Info } from 'lucide-react';
+import { Clock, Banknote, ChevronRight, UserPlus, RefreshCcw, Ruler, PlusCircle, History, Info, Loader2 } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 interface Service {
   id: string;
   name: string;
-  price: string;
+  price: number;
   duration: string;
-  icon: any;
   description: string;
+  icon?: any;
 }
 
-const services: Service[] = [
-  {
-    id: 'primera-vez',
-    name: 'Consulta Nutricional',
-    description: 'Primera vez',
-    price: '$40.000',
-    duration: '1 hora aprox.',
-    icon: UserPlus
-  },
-  {
-    id: 'control',
-    name: 'Consulta Nutricional',
-    description: 'Control y seguimiento',
-    price: '$30.000',
-    duration: '30 min aprox.',
-    icon: RefreshCcw
-  },
-  {
-    id: 'antropometria',
-    name: 'Antropometría',
-    description: 'Evaluación física completa',
-    price: '$50.000',
-    duration: '45 min - 1 hora',
-    icon: Ruler
-  },
-  {
-    id: 'completa-primera',
-    name: 'Consulta + Antropometría',
-    description: 'Abordaje integral inicial',
-    price: '$50.000',
-    duration: '2 horas aprox.',
-    icon: PlusCircle
-  },
-  {
-    id: 'completa-control',
-    name: 'Consulta + Antropometría',
-    description: 'Control integral',
-    price: '$40.000',
-    duration: '45 min aprox.',
-    icon: History
+const getIcon = (id: string) => {
+  switch(id) {
+    case 'primera-vez': return UserPlus;
+    case 'control': return RefreshCcw;
+    case 'antropometria': return Ruler;
+    case 'completa-primera': return PlusCircle;
+    case 'completa-control': return History;
+    default: return Info;
   }
-];
+};
 
 interface ServiceSelectionProps {
   onSelect: (service: Service) => void;
 }
 
 export const ServiceSelection = ({ onSelect }: ServiceSelectionProps) => {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      const { data, error } = await supabase
+        .from('services')
+        .select('*')
+        .order('price', { ascending: true });
+      
+      if (!error && data) {
+        setServices(data.map(s => ({ ...s, icon: getIcon(s.id) })));
+      }
+      setLoading(false);
+    };
+
+    fetchServices();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-primary">
+        <Loader2 className="animate-spin mb-4" size={32} />
+        <p className="text-[10px] uppercase tracking-widest font-bold opacity-60">Cargando servicios...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full max-w-2xl mx-auto">
       <div className="text-center mb-12">
@@ -82,7 +80,7 @@ export const ServiceSelection = ({ onSelect }: ServiceSelectionProps) => {
           >
             {/* Icono más sutil y compacto */}
             <div className="w-10 h-10 rounded-xl bg-accent/30 flex items-center justify-center text-primary/60 group-hover:bg-primary group-hover:text-white transition-all duration-500 shrink-0">
-              <service.icon size={18} strokeWidth={1.5} />
+              {service.icon && <service.icon size={18} strokeWidth={1.5} />}
             </div>
             
             <div className="flex-1 min-w-0">
@@ -91,7 +89,7 @@ export const ServiceSelection = ({ onSelect }: ServiceSelectionProps) => {
                   {service.name}
                 </h4>
                 <span className="text-xs md:text-sm font-serif font-bold text-primary shrink-0">
-                  {service.price}
+                  ${Number(service.price).toLocaleString('es-AR')}
                 </span>
               </div>
               

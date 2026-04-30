@@ -33,6 +33,7 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${inter.variable} ${plusJakarta.variable} ${outfit.variable} h-full antialiased overflow-x-hidden`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col overflow-x-hidden" suppressHydrationWarning>{children}</body>

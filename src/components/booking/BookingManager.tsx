@@ -90,9 +90,8 @@ export const BookingManager = () => {
 
       setIsSuccess(true);
       
-      // Abrir WhatsApp con más info
       const dateStr = format(selectedDate, "EEEE d 'de' MMMM", { locale: es });
-      const serviceText = `${selectedService.name} - ${selectedService.description} (${selectedService.price})`;
+      const serviceText = `${selectedService.name} - ${selectedService.description} ($${Number(selectedService.price).toLocaleString('es-AR')})`;
       const message = formatWhatsAppMessage(formData.name, dateStr, selectedTime, formData.modality, formData.location, serviceText);
       const whatsappUrl = getWhatsAppUrl(SITE_CONFIG.whatsappNumber, message);
       
@@ -101,7 +100,6 @@ export const BookingManager = () => {
       }, 1500);
 
     } catch (err: any) {
-      console.error('Detailed Supabase Error:', err);
       alert(`Error al guardar: ${err.message || 'Error desconocido'}. Por favor, avisale a Yesica por WhatsApp.`);
     } finally {
       setLoading(false);

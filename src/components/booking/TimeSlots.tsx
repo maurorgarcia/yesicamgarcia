@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { getDay } from 'date-fns';
+import { getDay, isSameDay, isAfter, setHours, setMinutes } from 'date-fns';
 import { SCHEDULES } from '@/lib/constants';
 
 interface TimeSlotsProps {
@@ -13,7 +13,22 @@ interface TimeSlotsProps {
 
 export const TimeSlots = ({ selectedTime, onTimeSelect, bookedSlots = [], selectedDate }: TimeSlotsProps) => {
   const dayOfWeek = selectedDate ? getDay(selectedDate) : 0;
-  const availableSlots = SCHEDULES[dayOfWeek] || [];
+  const rawSlots = SCHEDULES[dayOfWeek] || [];
+
+  // Filtrar horarios que ya pasaron si es el día de hoy
+  const filteredSlots = rawSlots.filter(time => {
+    if (!selectedDate) return true;
+    if (!isSameDay(selectedDate, new Date())) return true;
+
+    const [hours, minutes] = time.split(':').map(Number);
+    const slotDateTime = setMinutes(setHours(new Date(), hours), minutes);
+    
+    // Solo mostrar turnos que son al menos 15 minutos en el futuro
+    const limitTime = new Date();
+    limitTime.setMinutes(limitTime.getMinutes() + 15);
+    
+    return isAfter(slotDateTime, limitTime);
+  });
 
   return (
     <div className="w-full">
@@ -25,14 +40,14 @@ export const TimeSlots = ({ selectedTime, onTimeSelect, bookedSlots = [], select
       </div>
 
       <div className="bg-white rounded-[2.5rem] p-4 md:p-8 border border-slate-50 shadow-sm">
-        {availableSlots.length === 0 ? (
+        {filteredSlots.length === 0 ? (
           <div className="text-center py-12 border border-dashed border-foreground/10 rounded-3xl">
-            <p className="text-sm text-foreground/40 italic">No hay turnos disponibles para este día.</p>
+            <p className="text-sm text-foreground/40 italic">No hay turnos disponibles para este horario.</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {availableSlots.map((time, index) => {
-            const isBooked = bookedSlots.includes(time) || bookedSlots.includes(`${time}:00`);
+            {filteredSlots.map((time, index) => {
+            const isBooked = bookedSlots.some(s => s && s.startsWith(time));
             const isSelected = selectedTime === time;
 
             return (

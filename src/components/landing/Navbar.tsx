@@ -85,6 +85,7 @@ export const Navbar = () => {
                 src="/logo.png"
                 alt={SITE_CONFIG.name}
                 fill
+                priority
                 sizes="64px"
                 className="object-contain group-hover:scale-105 transition-transform duration-500"
               />
@@ -163,7 +164,7 @@ export const Navbar = () => {
             <div className="flex justify-between items-center px-8 py-6 border-b border-slate-50">
               <div className="flex items-center gap-3">
                 <div className="relative w-9 h-9">
-                  <Image src="/logo.png" alt="Logo" fill sizes="36px" className="object-contain" />
+                  <Image src="/logo.png" alt="Logo" fill sizes="36px" priority className="object-contain" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-foreground">Lic. Yesica M. García</span>

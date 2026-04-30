@@ -4,7 +4,7 @@ export const SITE_CONFIG = {
   mp: '7250',
   whatsappNumber: '5493364671229',
   instagram: 'lic.yesicamgarcia',
-  email: 'lic.yesicamgarcia@gmail.com', // Updated for consistency
+  email: 'yesicamgarcia2000@gmail.com',
   locations: {
     cemir: {
       name: 'Centro CEMIR',

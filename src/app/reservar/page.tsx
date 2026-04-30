@@ -1,10 +1,9 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Navbar } from '@/components/landing/Navbar';
-import { Footer } from '@/components/landing/Footer';
-import { ChevronLeft, MapPin, Globe, ShieldCheck } from 'lucide-react';
+import { ChevronLeft, MapPin, Globe } from 'lucide-react';
 import Link from 'next/link';
 
 // Carga dinámica del BookingManager sin SSR para evitar errores de hidratación
