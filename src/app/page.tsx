@@ -4,13 +4,29 @@ import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 
+// Genera slots de 30 minutos entre startH:startM y endH:endM (exclusive)
+function generateSlots(startH: number, startM: number, endH: number, endM: number): string[] {
+  const slots: string[] = [];
+  let h = startH, m = startM;
+  while (h < endH || (h === endH && m < endM)) {
+    slots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
+    m += 30;
+    if (m >= 60) { h++; m -= 60; }
+  }
+  return slots;
+}
+
 // Horarios disponibles por día de semana (0=Dom, 1=Lun, 2=Mar, ...)
+// Lun/Vie: XTREME todo el día (08:00 - 20:00)
+// Mar: CEMIR 08:00-12:00 + GO 14:00-18:00
+// Mié: GO 08:00-12:00 + XTREME tarde (coordinar, ponemos 14:00-19:00)
+// Jue: CEMIR desde mediodía (12:00-19:00)
 const HORARIOS: Record<number, string[]> = {
-  1: ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'],
-  2: ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'],
-  3: ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'],
-  4: ['12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00'],
-  5: ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00'],
+  1: generateSlots(8, 0, 20, 0),   // Lunes - XTREME todo el día
+  2: [...generateSlots(8, 0, 12, 0), ...generateSlots(14, 0, 18, 0)], // Martes - CEMIR mañana + GO tarde
+  3: [...generateSlots(8, 0, 12, 0), ...generateSlots(14, 0, 19, 0)], // Miércoles - GO mañana + XTREME tarde
+  4: generateSlots(12, 0, 19, 0),  // Jueves - CEMIR desde mediodía
+  5: generateSlots(8, 0, 20, 0),   // Viernes - XTREME todo el día
 };
 
 const DIAS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -75,20 +91,36 @@ const TIPOS_DETALLE: TipoConsultaDetalle[] = [
   }
 ];
 
-// Genera los próximos 30 días hábiles (Lun-Vie) desde mañana
+// Genera los próximos 30 días hábiles (Lun-Vie) incluyendo HOY si tiene horarios futuros
 function getAvailableDates(): { value: string; label: string }[] {
   const dates: { value: string; label: string }[] = [];
-  const today = new Date();
+  const now = new Date();
+  const today = new Date(now);
   today.setHours(0, 0, 0, 0);
   let current = new Date(today);
-  current.setDate(current.getDate() + 1); // Empezar desde mañana
 
   while (dates.length < 30) {
     const day = current.getDay();
     if (day >= 1 && day <= 5) { // Solo Lunes a Viernes
       const value = current.toISOString().split('T')[0];
-      const label = `${DIAS[day]} ${current.getDate()}/${current.getMonth() + 1}`;
-      dates.push({ value, label });
+      const isToday = current.getTime() === today.getTime();
+
+      // Si es hoy, solo incluirlo si quedan slots futuros
+      if (isToday) {
+        const slotsDelDia = HORARIOS[day] ?? [];
+        const nowMinutes = now.getHours() * 60 + now.getMinutes();
+        const haySlotsFuturos = slotsDelDia.some(slot => {
+          const [h, m] = slot.split(':').map(Number);
+          return h * 60 + m > nowMinutes;
+        });
+        if (haySlotsFuturos) {
+          const label = `Hoy · ${DIAS[day]} ${current.getDate()}/${current.getMonth() + 1}`;
+          dates.push({ value, label });
+        }
+      } else {
+        const label = `${DIAS[day]} ${current.getDate()}/${current.getMonth() + 1}`;
+        dates.push({ value, label });
+      }
     }
     current.setDate(current.getDate() + 1);
   }
@@ -120,6 +152,13 @@ export default function Home() {
   const [errorMsg, setErrorMsg] = useState('');
   const [turnosOcupados, setTurnosOcupados] = useState<{ fecha: string; hora: string }[]>([]);
   const [availableDates] = useState(() => getAvailableDates());
+  const [ahora, setAhora] = useState(() => new Date());
+
+  // Actualizar "ahora" cada minuto para que los slots pasados se deshabiliten en tiempo real
+  useEffect(() => {
+    const interval = setInterval(() => setAhora(new Date()), 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Obtener info detallada de la consulta elegida
   const consultaElegida = TIPOS_DETALLE.find(t => t.id === tipoConsulta) || TIPOS_DETALLE[0];
@@ -128,7 +167,18 @@ export default function Home() {
   const diaSemana = fecha
     ? new Date(fecha + 'T12:00:00').getDay()
     : null;
-  const horariosDia = diaSemana !== null ? (HORARIOS[diaSemana] ?? []) : [];
+
+  // Verificar si la fecha seleccionada es hoy
+  const todayStr = ahora.toLocaleDateString('en-CA'); // YYYY-MM-DD en zona local
+  const esFechaHoy = fecha === todayStr;
+  const ahoraMinutos = ahora.getHours() * 60 + ahora.getMinutes();
+
+  // Horarios del día, filtrando los pasados si es hoy
+  const horariosDia = (diaSemana !== null ? (HORARIOS[diaSemana] ?? []) : []).filter(slot => {
+    if (!esFechaHoy) return true;
+    const [h, m] = slot.split(':').map(Number);
+    return h * 60 + m > ahoraMinutos;
+  });
 
   // Horarios que ya están tomados para la fecha seleccionada
   const horasOcupadas = turnosOcupados
@@ -699,6 +749,7 @@ export default function Home() {
                       const dayName = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'][dateObj.getDay()];
                       const monthName = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'][dateObj.getMonth()];
                       const seleccionado = fecha === d.value;
+                      const esHoy = d.value === todayStr;
 
                       return (
                         <button
@@ -707,18 +758,25 @@ export default function Home() {
                           onClick={() => setFecha(d.value)}
                           className="flex-shrink-0 w-[68px] py-3 rounded-2xl border text-center transition-all duration-200 snap-start flex flex-col items-center justify-center cursor-pointer"
                           style={{
-                            background: seleccionado ? 'rgba(225,166,90,0.08)' : 'white',
-                            borderColor: seleccionado ? 'var(--primary)' : 'var(--border)',
-                            borderWidth: seleccionado ? '2px' : '1.5px',
+                            background: seleccionado ? 'rgba(225,166,90,0.08)' : esHoy ? 'rgba(225,166,90,0.03)' : 'white',
+                            borderColor: seleccionado ? 'var(--primary)' : esHoy ? 'rgba(225,166,90,0.4)' : 'var(--border)',
+                            borderWidth: seleccionado ? '2px' : esHoy ? '2px' : '1.5px',
                             boxShadow: seleccionado ? '0 4px 12px rgba(225, 166, 90, 0.06)' : 'none',
                           }}
                         >
-                          <span className="text-[9px] uppercase font-bold tracking-wider"
-                            style={{ color: seleccionado ? 'var(--secondary)' : 'var(--muted)' }}>
-                            {dayName}
-                          </span>
+                          {esHoy ? (
+                            <span className="text-[8px] uppercase font-bold tracking-wider px-1 py-0.5 rounded"
+                              style={{ background: 'var(--primary)', color: 'white' }}>
+                              HOY
+                            </span>
+                          ) : (
+                            <span className="text-[9px] uppercase font-bold tracking-wider"
+                              style={{ color: seleccionado ? 'var(--secondary)' : 'var(--muted)' }}>
+                              {dayName}
+                            </span>
+                          )}
                           <span className="text-xl font-bold my-0.5"
-                            style={{ color: seleccionado ? 'var(--secondary)' : 'var(--foreground)' }}>
+                            style={{ color: seleccionado ? 'var(--secondary)' : esHoy ? 'var(--secondary)' : 'var(--foreground)' }}>
                             {dayNum}
                           </span>
                           <span className="text-[8px] font-bold uppercase opacity-85"
