@@ -20,7 +20,8 @@ interface TipoConsultaDetalle {
   nombre: string;
   etiqueta?: string;
   duracion: string;
-  precio: string;
+  precioParticular: string;
+  precioObraSocial: string;
 }
 
 const TIPOS_DETALLE: TipoConsultaDetalle[] = [
@@ -29,35 +30,48 @@ const TIPOS_DETALLE: TipoConsultaDetalle[] = [
     nombre: 'Consulta Nutricional',
     etiqueta: 'Primera Vez',
     duracion: '1 hora aprox.',
-    precio: '$40.000'
+    precioParticular: '$40.000',
+    precioObraSocial: 'Bono / Token'
   },
   {
     id: 'Consulta nutricional control',
     nombre: 'Consulta Nutricional',
     etiqueta: 'Control',
     duracion: '30 min aprox.',
-    precio: '$30.000'
+    precioParticular: '$30.000',
+    precioObraSocial: 'Bono / Token'
   },
   {
-    id: 'Antropometría (primera vez o control)',
+    id: 'Antropometría primera vez',
     nombre: 'Antropometría',
-    etiqueta: '1° Vez o Control',
-    duracion: '45 min - 1 hora aprox.',
-    precio: '$50.000'
+    etiqueta: 'Primera Vez',
+    duracion: '1 hora aprox.',
+    precioParticular: '$50.000',
+    precioObraSocial: 'Bono / Token + $20.000'
+  },
+  {
+    id: 'Antropometría control',
+    nombre: 'Antropometría',
+    etiqueta: 'Control',
+    duracion: '30 - 45 min aprox.',
+    precioParticular: '$40.000',
+    precioObraSocial: 'Bono / Token + $20.000'
   },
   {
     id: 'Consulta nutricional + antropometría',
     nombre: 'Consulta + Antropometría',
-    etiqueta: 'Inicial',
+    etiqueta: 'Primera Vez',
     duracion: '2 horas aprox.',
-    precio: '$50.000'
+    precioParticular: '$50.000',
+    precioObraSocial: 'Bono / Token + $20.000'
   },
   {
     id: 'Consulta nutricional + antropometría control',
     nombre: 'Consulta + Antropometría',
     etiqueta: 'Control',
     duracion: '45 min aprox.',
-    precio: '$40.000'
+    precioParticular: '$40.000',
+    precioObraSocial: 'Bono / Token + $20.000'
   }
 ];
 
@@ -87,6 +101,7 @@ export default function Home() {
   const [paso, setPaso] = useState(1);
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [cobertura, setCobertura] = useState<'particular' | 'obra_social'>('particular');
   const [tipoConsulta, setTipoConsulta] = useState('Consulta nutricional por primera vez');
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -162,7 +177,8 @@ export default function Home() {
     setErrorMsg('');
     setEstado('loading');
 
-    const fullConsultaLabel = `${consultaElegida.nombre} (${consultaElegida.etiqueta || ''})`;
+    const coberturaLabel = cobertura === 'particular' ? 'Particular' : 'Obra Social';
+    const fullConsultaLabel = `${consultaElegida.nombre} (${consultaElegida.etiqueta || ''}) - ${coberturaLabel}`;
 
     const { error } = await supabase.from('turns').insert({
       nombre: nombre.trim(),
@@ -215,7 +231,7 @@ export default function Home() {
               {consultaElegida.nombre} ({consultaElegida.etiqueta})
             </div>
             <p className="text-sm font-semibold mt-2" style={{ color: 'var(--muted)' }}>
-              {consultaElegida.precio} · {consultaElegida.duracion}
+              {cobertura === 'particular' ? consultaElegida.precioParticular : consultaElegida.precioObraSocial} · {consultaElegida.duracion}
             </p>
           </div>
 
@@ -224,7 +240,7 @@ export default function Home() {
           </p>
 
           <a
-            href={`https://wa.me/5493364671229?text=${encodeURIComponent(`Hola Yesi! Saqué turno para: \n*${consultaElegida.nombre} (${consultaElegida.etiqueta})*\nValor: ${consultaElegida.precio}\n\nFecha: ${formatFechaLabel(fecha)}\nHora: ${hora} hs\nNombre: ${nombre}.`)}`}
+            href={`https://wa.me/5493364671229?text=${encodeURIComponent(`Hola Yesi! Saqué turno para: \n*${consultaElegida.nombre} (${consultaElegida.etiqueta})*\nCobertura: ${cobertura === 'particular' ? 'Particular' : 'Obra Social'}\nValor: ${cobertura === 'particular' ? consultaElegida.precioParticular : consultaElegida.precioObraSocial}\n\nFecha: ${formatFechaLabel(fecha)}\nHora: ${hora} hs\nNombre: ${nombre}.`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105"
@@ -467,25 +483,69 @@ export default function Home() {
 
             {/* PASO 2: Elegir Servicio */}
             {paso === 2 && (
-              <div className="space-y-5 animate-fade-in">
-                <div className="text-center mb-8">
-                  <h1 className="text-3xl font-bold mb-2 animate-fade-in" style={{ color: 'var(--secondary)' }}>
+              <div className="space-y-4 animate-fade-in">
+                <div className="text-center mb-4">
+                  <h1 className="text-3xl font-bold mb-1 animate-fade-in" style={{ color: 'var(--secondary)' }}>
                     Elegí tu Consulta
                   </h1>
-                  <p className="text-sm" style={{ color: 'var(--muted)' }}>
+                  <p className="text-xs" style={{ color: 'var(--muted)' }}>
                     Seleccioná la consulta o evaluación que deseás realizarte.
                   </p>
                 </div>
 
-                <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+                {/* Selector Cobertura: Particular / Obra Social */}
+                <div className="flex p-1.5 rounded-2xl border" style={{ background: 'var(--accent)', borderColor: 'var(--border)' }}>
+                  <button
+                    type="button"
+                    onClick={() => setCobertura('particular')}
+                    className="flex-1 py-2.5 text-center text-xs md:text-sm font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
+                    style={{
+                      background: cobertura === 'particular' ? 'var(--secondary)' : 'transparent',
+                      color: cobertura === 'particular' ? 'white' : 'var(--muted)',
+                      boxShadow: cobertura === 'particular' ? '0 4px 12px rgba(61,39,16,0.15)' : 'none',
+                    }}
+                  >
+                    Particular
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCobertura('obra_social')}
+                    className="flex-1 py-2.5 text-center text-xs md:text-sm font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
+                    style={{
+                      background: cobertura === 'obra_social' ? 'var(--secondary)' : 'transparent',
+                      color: cobertura === 'obra_social' ? 'white' : 'var(--muted)',
+                      boxShadow: cobertura === 'obra_social' ? '0 4px 12px rgba(61,39,16,0.15)' : 'none',
+                    }}
+                  >
+                    Obra Social / Prepaga
+                  </button>
+                </div>
+
+                {/* Mensaje Informativo si es Obra Social */}
+                {cobertura === 'obra_social' && (
+                  <div className="p-3.5 rounded-xl border text-[11px] leading-relaxed animate-fade-in flex items-start gap-2"
+                    style={{ background: 'rgba(225,166,90,0.04)', borderColor: 'var(--border)', color: 'var(--foreground)' }}>
+                    <svg className="flex-shrink-0 mt-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2.5">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="12" y1="16" x2="12" y2="12"/>
+                      <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                    <span>
+                      <strong>Importante:</strong> Debés presentar el <strong>bono o token</strong> de tu cobertura médica. Algunas prácticas tienen un adicional.
+                    </span>
+                  </div>
+                )}
+
+                <div className="space-y-2.5 max-h-[285px] overflow-y-auto pr-1">
                   {TIPOS_DETALLE.map(t => {
                     const seleccionado = tipoConsulta === t.id;
+                    const precioActual = cobertura === 'particular' ? t.precioParticular : t.precioObraSocial;
                     return (
                       <button
                         key={t.id}
                         type="button"
                         onClick={() => irAPaso3(t.id)}
-                        className="w-full text-left p-4 rounded-2xl transition-all duration-200 flex items-center justify-between gap-4 border"
+                        className="w-full text-left p-3.5 rounded-2xl transition-all duration-200 flex items-center justify-between gap-4 border"
                         style={{
                           background: seleccionado ? 'rgba(225,166,90,0.04)' : 'white',
                           borderColor: seleccionado ? 'var(--primary)' : 'var(--border)',
@@ -507,7 +567,7 @@ export default function Home() {
                           </div>
                           <div className="flex items-center gap-3 text-xs" style={{ color: 'var(--muted)' }}>
                             <span className="flex items-center gap-1">
-                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                 <circle cx="12" cy="12" r="10"/>
                                 <polyline points="12 6 12 12 16 14"/>
                               </svg>
@@ -516,8 +576,8 @@ export default function Home() {
                           </div>
                         </div>
                         <div className="text-right flex-shrink-0">
-                          <div className="text-base md:text-lg font-bold" style={{ color: 'var(--secondary)' }}>
-                            {t.precio}
+                          <div className="text-sm md:text-base font-bold whitespace-nowrap" style={{ color: 'var(--secondary)' }}>
+                            {precioActual}
                           </div>
                         </div>
                       </button>
