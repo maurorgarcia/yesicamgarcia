@@ -306,9 +306,25 @@ export default function Home() {
             {paso === 1 && (
               <div className="space-y-5 animate-fade-in">
                 <div className="text-center mb-6">
-                  <h1 className="text-3xl font-bold mb-2 animate-fade-in" style={{ color: 'var(--secondary)' }}>
-                    Tus Datos
+                  {/* Foto Profesional de Yesica */}
+                  <div className="flex justify-center mb-4">
+                    <div className="relative p-1 rounded-full border-2 animate-float" style={{ borderColor: 'var(--primary)', background: 'white', boxShadow: '0 8px 30px rgba(225,166,90,0.15)' }}>
+                      <img 
+                        src="/fotoNutri.png" 
+                        alt="Lic. Yesica M. García" 
+                        className="w-20 h-20 rounded-full object-cover"
+                      />
+                      <div className="absolute -bottom-1 -right-1 p-1 bg-white rounded-full border shadow-sm flex items-center justify-center" style={{ borderColor: 'var(--border)' }}>
+                        <img src="/logo.png" alt="Logo" className="w-5 h-5 object-contain" />
+                      </div>
+                    </div>
+                  </div>
+                  <h1 className="text-3xl font-bold mb-1 animate-fade-in" style={{ color: 'var(--secondary)' }}>
+                    Lic. Yesica M. García
                   </h1>
+                  <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: 'var(--primary)' }}>
+                    Nutricionista · MP 7250
+                  </p>
                   <p className="text-sm" style={{ color: 'var(--muted)' }}>
                     Comenzá ingresando tu información de contacto.
                   </p>
