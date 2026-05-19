@@ -173,7 +173,6 @@ export default function Home() {
     });
 
     if (error) {
-      console.error(error);
       setEstado('error');
     } else {
       setEstado('success');
@@ -307,7 +306,7 @@ export default function Home() {
               <div className="space-y-4 animate-fade-in">
                 <div className="flex items-center gap-3.5 mb-4 border-b pb-3.5" style={{ borderColor: 'rgba(61,39,16,0.08)' }}>
                   {/* Foto Profesional de Yesica (Compacta) */}
-                  <div className="relative p-0.5 rounded-full border-2 flex-shrink-0" style={{ borderColor: 'var(--primary)', background: 'white' }}>
+                  <div className="relative p-0.5 rounded-full border-2 flex-shrink-0" style={{ borderColor: 'var(--primary)', background: 'white', boxShadow: '0 0 0 3px rgba(225,166,90,0.08)' }}>
                     <img 
                       src="/fotoNutri.png" 
                       alt="Lic. Yesica M. García" 

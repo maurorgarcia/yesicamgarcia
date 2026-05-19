@@ -1,27 +1,25 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans, Outfit } from "next/font/google";
+import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Lic. Yesica M. García | Turnero Nutrición Online San Nicolás",
-  description: "Sacá tu turno online en 3 simples pasos con la Lic. Yesica M. García. Consulta Nutricional, Antropometría y planes personalizados en San Nicolás.",
+  description:
+    "Sacá tu turno online en 3 simples pasos con la Lic. Yesica M. García. Consulta Nutricional, Antropometría y planes personalizados en San Nicolás.",
   keywords: [
     "nutricionista san nicolas",
     "turnera yesica garcia",
@@ -29,7 +27,7 @@ export const metadata: Metadata = {
     "antropometria san nicolas",
     "consulta nutricional online",
     "nutricion integral san nicolas",
-    "sacar turno nutricionista"
+    "sacar turno nutricionista",
   ],
   authors: [{ name: "Lic. Yesica M. García" }],
   creator: "Lic. Yesica M. García",
@@ -38,7 +36,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Lic. Yesica M. García | Turnero Nutrición Online",
-    description: "Reservá tu consulta de nutrición o antropometría de forma rápida y cómoda. Consultorios en Cemir, GO Zona Sur y Xtreme.",
+    description:
+      "Reservá tu consulta de nutrición o antropometría de forma rápida y cómoda. Consultorios en Cemir, GO Zona Sur y Xtreme.",
     siteName: "Turnero Lic. Yesica M. García",
     locale: "es_AR",
     type: "website",
@@ -56,9 +55,9 @@ export const metadata: Metadata = {
       index: true,
       follow: true,
       noimageindex: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 };
@@ -71,10 +70,13 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${inter.variable} ${plusJakarta.variable} ${outfit.variable} h-full antialiased`}
+      className={`${plusJakarta.variable} ${outfit.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full bg-background text-foreground" suppressHydrationWarning>
+      <body
+        className="min-h-full bg-background text-foreground"
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
