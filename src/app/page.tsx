@@ -162,10 +162,16 @@ export default function Home() {
     setPaso(2);
   }
 
-  function irAPaso3(tipoId: string) {
-    setTipoConsulta(tipoId);
+  function seleccionarCobertura(cob: 'particular' | 'obra_social') {
+    setCobertura(cob);
     setErrorMsg('');
     setPaso(3);
+  }
+
+  function irAPaso4(tipoId: string) {
+    setTipoConsulta(tipoId);
+    setErrorMsg('');
+    setPaso(4);
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -303,7 +309,7 @@ export default function Home() {
 
           {/* Indicador de pasos */}
           <div className="flex justify-center items-center gap-2 mb-5">
-            {[1, 2, 3].map(p => (
+            {[1, 2, 3, 4].map(p => (
               <div
                 key={p}
                 className="h-1.5 rounded-full transition-all duration-300"
@@ -351,7 +357,7 @@ export default function Home() {
                     type="text"
                     value={nombre}
                     onChange={e => setNombre(e.target.value)}
-                    placeholder="Ej: María González"
+                    placeholder="Ej: Angelica Stuardo"
                     autoComplete="name"
                     className="w-full px-5 py-4 rounded-2xl text-base outline-none transition-all duration-200"
                     style={{
@@ -481,8 +487,73 @@ export default function Home() {
               </div>
             )}
 
-            {/* PASO 2: Elegir Servicio */}
+            {/* PASO 2: Elegir Cobertura */}
             {paso === 2 && (
+              <div className="space-y-6 animate-fade-in text-center">
+                <div className="mb-4">
+                  <h1 className="text-3xl font-bold mb-1 animate-fade-in" style={{ color: 'var(--secondary)' }}>
+                    ¿Cómo vas a abonar?
+                  </h1>
+                  <p className="text-xs" style={{ color: 'var(--muted)' }}>
+                    Seleccioná tu tipo de consulta para ver las opciones disponibles.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-sm mx-auto">
+                  <button
+                    type="button"
+                    onClick={() => seleccionarCobertura('particular')}
+                    className="p-6 rounded-3xl border text-center transition-all duration-300 flex flex-col items-center justify-center gap-3 cursor-pointer bg-white group hover:scale-[1.02] hover:shadow-md"
+                    style={{
+                      borderColor: 'var(--border)',
+                      boxShadow: '0 4px 20px rgba(61,39,16,0.02)',
+                    }}
+                  >
+                    <div className="p-3.5 rounded-full transition-colors duration-300 bg-accent group-hover:bg-[#f6efe7]">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2.5">
+                        <line x1="12" y1="1" x2="12" y2="23"/>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                      </svg>
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-base font-extrabold block leading-none" style={{ color: 'var(--secondary)' }}>
+                        Particular
+                      </span>
+                      <span className="text-[11px]" style={{ color: 'var(--muted)' }}>
+                        Pago privado
+                      </span>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => seleccionarCobertura('obra_social')}
+                    className="p-6 rounded-3xl border text-center transition-all duration-300 flex flex-col items-center justify-center gap-3 cursor-pointer bg-white group hover:scale-[1.02] hover:shadow-md"
+                    style={{
+                      borderColor: 'var(--border)',
+                      boxShadow: '0 4px 20px rgba(61,39,16,0.02)',
+                    }}
+                  >
+                    <div className="p-3.5 rounded-full transition-colors duration-300 bg-accent group-hover:bg-[#f6efe7]">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2.5">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                      </svg>
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-base font-extrabold block leading-none" style={{ color: 'var(--secondary)' }}>
+                        Obra Social
+                      </span>
+                      <span className="text-[11px]" style={{ color: 'var(--muted)' }}>
+                        Bono o Token
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* PASO 3: Elegir Servicio */}
+            {paso === 3 && (
               <div className="space-y-4 animate-fade-in">
                 <div className="text-center mb-4">
                   <h1 className="text-3xl font-bold mb-1 animate-fade-in" style={{ color: 'var(--secondary)' }}>
@@ -491,34 +562,6 @@ export default function Home() {
                   <p className="text-xs" style={{ color: 'var(--muted)' }}>
                     Seleccioná la consulta o evaluación que deseás realizarte.
                   </p>
-                </div>
-
-                {/* Selector Cobertura: Particular / Obra Social */}
-                <div className="flex p-1.5 rounded-2xl border" style={{ background: 'var(--accent)', borderColor: 'var(--border)' }}>
-                  <button
-                    type="button"
-                    onClick={() => setCobertura('particular')}
-                    className="flex-1 py-2.5 text-center text-xs md:text-sm font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
-                    style={{
-                      background: cobertura === 'particular' ? 'var(--secondary)' : 'transparent',
-                      color: cobertura === 'particular' ? 'white' : 'var(--muted)',
-                      boxShadow: cobertura === 'particular' ? '0 4px 12px rgba(61,39,16,0.15)' : 'none',
-                    }}
-                  >
-                    Particular
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCobertura('obra_social')}
-                    className="flex-1 py-2.5 text-center text-xs md:text-sm font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
-                    style={{
-                      background: cobertura === 'obra_social' ? 'var(--secondary)' : 'transparent',
-                      color: cobertura === 'obra_social' ? 'white' : 'var(--muted)',
-                      boxShadow: cobertura === 'obra_social' ? '0 4px 12px rgba(61,39,16,0.15)' : 'none',
-                    }}
-                  >
-                    Obra Social / Prepaga
-                  </button>
                 </div>
 
                 {/* Mensaje Informativo si es Obra Social */}
@@ -536,7 +579,7 @@ export default function Home() {
                   </div>
                 )}
 
-                <div className="space-y-2.5 max-h-[285px] overflow-y-auto pr-1">
+                <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-1">
                   {TIPOS_DETALLE.map(t => {
                     const seleccionado = tipoConsulta === t.id;
                     const precioActual = cobertura === 'particular' ? t.precioParticular : t.precioObraSocial;
@@ -544,8 +587,8 @@ export default function Home() {
                       <button
                         key={t.id}
                         type="button"
-                        onClick={() => irAPaso3(t.id)}
-                        className="w-full text-left p-3.5 rounded-2xl transition-all duration-200 flex items-center justify-between gap-4 border"
+                        onClick={() => irAPaso4(t.id)}
+                        className="w-full text-left p-3.5 rounded-2xl transition-all duration-200 flex items-center justify-between gap-4 border cursor-pointer"
                         style={{
                           background: seleccionado ? 'rgba(225,166,90,0.04)' : 'white',
                           borderColor: seleccionado ? 'var(--primary)' : 'var(--border)',
@@ -554,16 +597,24 @@ export default function Home() {
                         }}
                       >
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <span className="font-semibold text-sm md:text-base" style={{ color: 'var(--foreground)' }}>
+                          <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                            <span className="font-semibold text-xs md:text-sm" style={{ color: 'var(--foreground)' }}>
                               {t.nombre}
                             </span>
                             {t.etiqueta && (
-                              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                              <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider"
                                 style={{ background: 'var(--accent)', color: 'var(--secondary)' }}>
                                 {t.etiqueta}
                               </span>
                             )}
+                            <span className="text-[8px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider"
+                              style={{ 
+                                background: cobertura === 'particular' ? 'rgba(225,166,90,0.06)' : '#f0fdf4',
+                                color: cobertura === 'particular' ? 'var(--secondary)' : '#16a34a',
+                                border: cobertura === 'particular' ? '1px solid rgba(225,166,90,0.15)' : '1px solid #bbf7d0'
+                              }}>
+                              {cobertura === 'particular' ? 'Particular' : 'Obra Social'}
+                            </span>
                           </div>
                           <div className="flex items-center gap-3 text-xs" style={{ color: 'var(--muted)' }}>
                             <span className="flex items-center gap-1">
@@ -587,8 +638,8 @@ export default function Home() {
               </div>
             )}
 
-            {/* PASO 3: Fecha y Horario */}
-            {paso === 3 && (
+            {/* PASO 4: Fecha y Horario */}
+            {paso === 4 && (
               <div className="space-y-5 animate-fade-in">
                 <div className="text-center mb-6 animate-fade-in">
                   <div className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2"
@@ -786,8 +837,8 @@ export default function Home() {
               </a>
             </p>
             
-            <div className="pt-2 flex items-center justify-center gap-3.5 text-[11px] opacity-80 hover:opacity-100 transition-all duration-300">
-              <span className="flex items-center gap-2 font-medium tracking-wide" style={{ color: 'var(--foreground)' }}>
+            <div className="pt-2 flex items-center justify-center gap-4 text-[10px] opacity-70 hover:opacity-100 transition-all duration-300">
+              <span className="flex items-center gap-1.5 font-medium tracking-wide" style={{ color: 'var(--muted)' }}>
                 Hecho por
                 <a 
                   href="https://mrgarciadev.vercel.app/" 
@@ -799,22 +850,24 @@ export default function Home() {
                   <img 
                     src="/logoMrgDeve.png" 
                     alt="MRG Dev" 
-                    className="h-4.5 w-auto object-contain" 
+                    className="h-3.5 w-auto object-contain" 
                     style={{ filter: 'invert(1)' }}
                   />
                 </a>
               </span>
-              <span style={{ color: 'rgba(225, 166, 90, 0.4)' }}>|</span>
+              <span style={{ color: 'rgba(225, 166, 90, 0.25)' }}>|</span>
               <Link
                 href="/admin"
-                className="hover:scale-110 transition-transform cursor-pointer p-1 flex items-center justify-center"
+                className="hover:scale-105 transition-transform cursor-pointer flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider"
+                style={{ color: 'var(--primary)' }}
                 title="Acceso Administración"
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
+                <span>Acceso Seguro</span>
               </Link>
             </div>
           </footer>
