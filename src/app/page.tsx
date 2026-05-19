@@ -726,22 +726,22 @@ export default function Home() {
               </a>
             </p>
             
-            <div className="pt-2 flex items-center justify-center gap-3.5 text-[10px] opacity-25 hover:opacity-100 transition-all duration-300">
-              <span className="flex items-center gap-1.5 font-medium tracking-wide">
+            <div className="pt-2 flex items-center justify-center gap-3.5 text-[11px] opacity-80 hover:opacity-100 transition-all duration-300">
+              <span className="flex items-center gap-2 font-medium tracking-wide" style={{ color: 'var(--foreground)' }}>
                 Hecho por
                 <img 
                   src="/logoMrgDeve.png" 
                   alt="MRG Dev" 
-                  className="h-3.5 w-auto object-contain brightness-95 contrast-105" 
+                  className="h-4.5 w-auto object-contain" 
                 />
               </span>
-              <span style={{ color: 'rgba(225, 166, 90, 0.2)' }}>|</span>
+              <span style={{ color: 'rgba(225, 166, 90, 0.4)' }}>|</span>
               <Link
                 href="/admin"
-                className="hover:scale-110 transition-transform cursor-pointer p-0.5"
+                className="hover:scale-110 transition-transform cursor-pointer p-1 flex items-center justify-center"
                 title="Acceso Administración"
               >
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
                   strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
