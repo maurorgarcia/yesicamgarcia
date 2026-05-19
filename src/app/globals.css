@@ -1,20 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  /* Refined Palette: Emerald & Gold Authority */
-  --primary: #C5A059;      /* Bronzed Gold - Luxury & Precision */
-  --secondary: #1B3F39;    /* Deep Emerald - Medical Health & Growth */
-  --accent: #F4EFEA;       /* Soft Stone - Backgrounds */
-  --background: #FCFBF9;   /* Pure Pearl */
-  --foreground: #121212;   /* Obsidian */
-  
-  --spacing-scale: 0.85;
-  
-  --primary-hover: #A68545;
-  --muted: #707070;
-  --border: rgba(27, 63, 57, 0.08);
-  
-  --shadow-premium: 0 12px 40px -10px rgba(27, 63, 57, 0.12);
+  --primary: #E1A65A;      /* Color de Marca Ochre / Oro */
+  --secondary: #3D2710;    /* Chocolate Espresso Oscuro (Acentos principales, botones y títulos) */
+  --accent: #FAF6F0;       /* Lino Suave */
+  --background: #FCFAF7;   /* Off-white Cálido */
+  --foreground: #2C1D13;   /* Espresso Suave (Texto principal) */
+  --muted: #8C7768;        /* Taupe Cálido */
+  --border: rgba(225, 166, 90, 0.12);
+  --primary-hover: #C68A3E;
+  --shadow-premium: 0 12px 40px -10px rgba(225, 166, 90, 0.08);
 }
 
 @theme inline {
@@ -25,96 +20,63 @@
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  
   --font-serif: var(--font-outfit);
   --font-sans: var(--font-jakarta);
-  --font-mono: var(--font-inter);
-  
-  --shadow-premium: var(--shadow-premium);
 }
 
 html {
   scroll-behavior: smooth;
-  font-size: 92%; /* Achicamos la base para que al 100% se vea como vos querés */
+  font-size: 92%;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/10;
-    position: relative;
-  }
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.03;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    z-index: 9999;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-bold tracking-tight text-foreground;
-  }
+body {
+  font-family: var(--font-sans), sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
 }
 
-@layer utilities {
-  .text-editorial {
-    font-size: clamp(0.9rem, 0.85rem + 0.25vw, 1.1rem);
-    @apply leading-relaxed text-muted font-sans font-light;
-  }
-  .title-editorial {
-    /* Tipografía fluida: la achicamos un poquito más */
-    font-size: clamp(2rem, 1.2rem + 3vw, 4.2rem);
-    @apply font-serif font-bold leading-[1.1] tracking-tight text-foreground;
-  }
-  .section-spacing {
-    @apply py-14 md:py-20 lg:py-24;
-  }
-  .premium-glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-[0_15px_40px_rgba(0,0,0,0.02)] rounded-[2rem];
-  }
-  .reveal-text {
-    @apply inline-block overflow-hidden align-bottom;
-  }
+h1, h2, h3, h4 {
+  font-family: var(--font-serif), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 92%; /* Normalized for 100% zoom preference */
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(27, 63, 57, 0.05);
-}
-
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(225, 166, 90, 0.04); }
 ::-webkit-scrollbar-thumb {
   background: var(--secondary);
   border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* Animaciones */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
+.animate-fade-up  { animation: fadeUp  0.6s ease both; }
+.animate-fade-in  { animation: fadeIn  0.4s ease both; }
+.animate-spin-slow { animation: spin 1s linear infinite; }
 
-@keyframes slow-zoom {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
 
-.animate-slow-zoom {
-  animation: slow-zoom 30s ease-in-out infinite;
+/* Ocultar barra de scroll para el carrusel de días */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
