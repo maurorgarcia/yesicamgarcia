@@ -20,10 +20,46 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Turnero | Lic. Yesica M. García",
-  description: "Sacá tu turno de forma rápida y sencilla con la Lic. Yesica M. García.",
+  title: "Lic. Yesica M. García | Turnero Nutrición Online San Nicolás",
+  description: "Sacá tu turno online en 3 simples pasos con la Lic. Yesica M. García. Consulta Nutricional, Antropometría y planes personalizados en San Nicolás.",
+  keywords: [
+    "nutricionista san nicolas",
+    "turnera yesica garcia",
+    "lic yesica garcia",
+    "antropometria san nicolas",
+    "consulta nutricional online",
+    "nutricion integral san nicolas",
+    "sacar turno nutricionista"
+  ],
+  authors: [{ name: "Lic. Yesica M. García" }],
+  creator: "Lic. Yesica M. García",
   icons: {
     icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "Lic. Yesica M. García | Turnero Nutrición Online",
+    description: "Reservá tu consulta de nutrición o antropometría de forma rápida y cómoda. Consultorios en Cemir, GO Zona Sur y Xtreme.",
+    siteName: "Turnero Lic. Yesica M. García",
+    locale: "es_AR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Lic. Yesica M. García | Turnero Nutrición",
+    description: "Sacá tu turno online de forma rápida y sencilla.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
