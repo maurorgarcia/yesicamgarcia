@@ -789,12 +789,20 @@ export default function Home() {
             <div className="pt-2 flex items-center justify-center gap-3.5 text-[11px] opacity-80 hover:opacity-100 transition-all duration-300">
               <span className="flex items-center gap-2 font-medium tracking-wide" style={{ color: 'var(--foreground)' }}>
                 Hecho por
-                <img 
-                  src="/logoMrgDeve.png" 
-                  alt="MRG Dev" 
-                  className="h-4.5 w-auto object-contain" 
-                  style={{ filter: 'invert(1)' }}
-                />
+                <a 
+                  href="https://mrgarciadev.vercel.app/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:scale-105 transition-transform flex items-center cursor-pointer"
+                  title="Visitar sitio de MRG Dev"
+                >
+                  <img 
+                    src="/logoMrgDeve.png" 
+                    alt="MRG Dev" 
+                    className="h-4.5 w-auto object-contain" 
+                    style={{ filter: 'invert(1)' }}
+                  />
+                </a>
               </span>
               <span style={{ color: 'rgba(225, 166, 90, 0.4)' }}>|</span>
               <Link
