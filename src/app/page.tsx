@@ -733,6 +733,7 @@ export default function Home() {
                   src="/logoMrgDeve.png" 
                   alt="MRG Dev" 
                   className="h-4.5 w-auto object-contain" 
+                  style={{ filter: 'invert(1)' }}
                 />
               </span>
               <span style={{ color: 'rgba(225, 166, 90, 0.4)' }}>|</span>
