@@ -283,11 +283,11 @@ export default function Home() {
       </header>
 
       {/* Main */}
-      <main className="flex-1 flex items-center justify-center px-4 py-8">
+      <main className="flex-1 flex items-center justify-center px-4 py-4">
         <div className="w-full max-w-lg animate-fade-up">
 
           {/* Indicador de pasos */}
-          <div className="flex justify-center items-center gap-2 mb-8">
+          <div className="flex justify-center items-center gap-2 mb-5">
             {[1, 2, 3].map(p => (
               <div
                 key={p}
@@ -300,34 +300,31 @@ export default function Home() {
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4.5">
 
             {/* PASO 1: Datos Personales */}
             {paso === 1 && (
-              <div className="space-y-5 animate-fade-in">
-                <div className="text-center mb-6">
-                  {/* Foto Profesional de Yesica */}
-                  <div className="flex justify-center mb-4">
-                    <div className="relative p-1 rounded-full border-2 animate-float" style={{ borderColor: 'var(--primary)', background: 'white', boxShadow: '0 8px 30px rgba(225,166,90,0.15)' }}>
-                      <img 
-                        src="/fotoNutri.png" 
-                        alt="Lic. Yesica M. García" 
-                        className="w-20 h-20 rounded-full object-cover"
-                      />
-                      <div className="absolute -bottom-1 -right-1 p-1 bg-white rounded-full border shadow-sm flex items-center justify-center" style={{ borderColor: 'var(--border)' }}>
-                        <img src="/logo.png" alt="Logo" className="w-5 h-5 object-contain" />
-                      </div>
-                    </div>
+              <div className="space-y-4 animate-fade-in">
+                <div className="flex items-center gap-3.5 mb-4 border-b pb-3.5" style={{ borderColor: 'rgba(61,39,16,0.08)' }}>
+                  {/* Foto Profesional de Yesica (Compacta) */}
+                  <div className="relative p-0.5 rounded-full border-2 flex-shrink-0" style={{ borderColor: 'var(--primary)', background: 'white' }}>
+                    <img 
+                      src="/fotoNutri.png" 
+                      alt="Lic. Yesica M. García" 
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
                   </div>
-                  <h1 className="text-3xl font-bold mb-1 animate-fade-in" style={{ color: 'var(--secondary)' }}>
-                    Lic. Yesica M. García
-                  </h1>
-                  <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: 'var(--primary)' }}>
-                    Nutricionista · MP 7250
-                  </p>
-                  <p className="text-sm" style={{ color: 'var(--muted)' }}>
-                    Comenzá ingresando tu información de contacto.
-                  </p>
+                  <div className="text-left">
+                    <h1 className="text-xl font-bold leading-tight" style={{ color: 'var(--secondary)' }}>
+                      Lic. Yesica M. García
+                    </h1>
+                    <p className="text-[9px] font-bold tracking-widest uppercase text-muted" style={{ color: 'var(--primary)' }}>
+                      Nutricionista · MP 7250
+                    </p>
+                    <p className="text-xs" style={{ color: 'var(--muted)' }}>
+                      Ingresá tus datos de contacto para reservar
+                    </p>
+                  </div>
                 </div>
 
                 <div>
