@@ -711,8 +711,8 @@ export default function Home() {
             )}
           </form>
 
-          {/* Footer mini con botón oculto de admin */}
-          <footer className="mt-12 text-center text-xs space-y-3" style={{ color: 'var(--muted)' }}>
+          {/* Footer mini con botón oculto de admin y firma MRG Dev */}
+          <footer className="mt-7 text-center text-xs space-y-2.5" style={{ color: 'var(--muted)' }}>
             <p>
               Para cancelar o consultar,{' '}
               <a
@@ -726,13 +726,22 @@ export default function Home() {
               </a>
             </p>
             
-            <div className="pt-4 flex items-center justify-center">
+            <div className="pt-2 flex items-center justify-center gap-3.5 text-[10px] opacity-25 hover:opacity-100 transition-all duration-300">
+              <span className="flex items-center gap-1.5 font-medium tracking-wide">
+                Hecho por
+                <img 
+                  src="/logoMrgDeve.png" 
+                  alt="MRG Dev" 
+                  className="h-3.5 w-auto object-contain brightness-95 contrast-105" 
+                />
+              </span>
+              <span style={{ color: 'rgba(225, 166, 90, 0.2)' }}>|</span>
               <Link
                 href="/admin"
-                className="opacity-15 hover:opacity-100 hover:scale-110 transition-all duration-300 cursor-pointer p-2"
+                className="hover:scale-110 transition-transform cursor-pointer p-0.5"
                 title="Acceso Administración"
               >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
                   strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
